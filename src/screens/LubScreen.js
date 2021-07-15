@@ -38,39 +38,21 @@ export class LubScreen extends React.Component {
       loading: true,
       refreshing: false,
       requestError: false,
-      isTglBerobatVisible: false,
-      idClaim: '',
-      jenisClaimId: null,
-      namaPasien: '',
-      tglBerobat: new Date(),
-      nilaiClaim: '',
-      maxClaim: '',
-      gender: null,
-      maritalStatus: null,
-
-      jenisClaimOptions: null,
-      hubunganId: null,
-      hubunganOptions: null,
-      isHubLoading: false,
-
-      subClaimId: null,
-      subClaimOptions: 'na',
-      isSubClaimLoading: false,
-
-      pasienId: null,
-      isPasienLoading: false,
-
       keyboardState: 'closed',
-
-      image: null,
-
-      nama: '',
+      storageId: null, //code_number,type
+      unitId: null, // code_number
+      locationId: null, //id,nama
+      typeId: null, // id_oil_grease,jenis,uom
+      componentId: null, //id_component , component
+      statusId: null, //value , text
+      storageOptions: null, //code_number,type
+      unitOptions: null, // code_number
+      locationOptions: null, //id,nama
+      typeOptions: null, // id_oil_grease,jenis,uom
+      componentOptions: null, //id_component , component
+      statusOptions: null, //value , text
     };
   }
-
-  getClaimState = () => {
-    Alert(this.state.jenisClaimId);
-  };
 
   goBack = () => {
     this.props.route.params.onGoBack();
@@ -78,26 +60,57 @@ export class LubScreen extends React.Component {
   };
 
   componentDidMount() {
-    this.get();
+    this.getLubData();
   }
 
   getLubData = () => {
     this.setState({loading: true});
     Axios.get(`/oilgreaseForm/${this.context.userData.nrp}`)
       .then((res) => {
-        const formattedJenis = res.data.jenis.map((item, index) => ({
+        const formattedStorage = res.data.storage.map((item, index) => ({
+          id: index,
+          code: item.type,
+          name: item.code_number,
+        }));
+        const formattedLocation = res.data.location.map((item, index) => ({
           id: index,
           code: item.id,
+          name: item.nama,
+        }));
+        const formattedUnit = res.data.type.map((item, index) => ({
+          id: index,
+          code: item.code_number,
+          name: item.code_number,
+        }));
+        const formattedType = res.data.type.map((item, index) => ({
+          id: index,
+          code: item.id_oil_grease,
           name: item.jenis,
+          uom: item.uom,
+        }));
+        const formattedComponent = res.data.component.map((item, index) => ({
+          id: index,
+          code: item.id_component,
+          name: item.component,
+        }));
+        const formattedStatus = res.data.status.map((item, index) => ({
+          id: index,
+          code: item.value,
+          name: item.text,
         }));
         this.setState({
           loading: false,
           refreshing: false,
           requestError: false,
-
-          jenisClaimOptions: formattedJenis,
-          idClaim: res.data.id_claim,
+          storageOptions: formattedStorage,
+          locationOptions: formattedLocation,
+          unitOptions: formattedUnit,
+          typeOptions: formattedType,
+          componentOptions: formattedComponent,
+          statusOptions: formattedStatus,
         });
+        // alert(JSON.stringify(this.state.storageOptions));
+        // alert(JSON.stringify(this.state.locationOptions));
       })
       .catch((e) => {
         this.setState({
@@ -111,15 +124,8 @@ export class LubScreen extends React.Component {
 
   handleKirim = () => {
     const sisaplafon = parseFloat(this.state.plafon.plafonSkrg);
-    const nilaiclaim = parseFloat(this.state.nilaiClaim);
-    const maxclaim = parseFloat(this.state.maxClaim);
 
     if (
-      this.state.image == null ||
-      this.state.jenisClaimId == null ||
-      this.state.hubunganId == null ||
-      this.state.nama == null ||
-      this.state.nilaiClaim == null ||
       this.state.tglBerobat == null ||
       ((this.state.jenisClaimOptions[this.state.jenisClaimId].code == 'LEN' ||
         this.state.jenisClaimOptions[this.state.jenisClaimId].code == 'SCH') &&
@@ -137,98 +143,74 @@ export class LubScreen extends React.Component {
         {onDismiss: () => null},
       );
     } else {
-      if (
-        ((this.state.jenisClaimId == 0 || this.state.jenisClaimId == 1) &&
-          nilaiclaim > sisaplafon) ||
-        nilaiclaim > maxclaim
-      ) {
-        Alert.alert(
-          'Oops!',
-          'Nilai claim melebihi batas maks.',
-          [
-            {
-              text: 'OK',
-              onPress: () => null,
-            },
-          ],
-          {onDismiss: () => null},
-        );
-      } else {
-        //   alert('Success !!');
-        // }
-        this.context.setLoading(true);
-        const {
-          jenisClaimId,
-          subClaimId,
-          hubunganId,
-          jenisClaimOptions,
-          subClaimOptions,
-          hubunganOptions,
-        } = this.state;
-        var data = new FormData();
-        data.append('id_claim', this.state.idClaim);
-        data.append('nama', this.state.namaPasien);
-        data.append('kode_hub', hubunganOptions[hubunganId].code);
-        data.append('kode_claim', jenisClaimOptions[jenisClaimId].code);
-        data.append('amount', this.state.nilaiClaim);
-        data.append(
-          'tgl_kwitansi',
-          this.getTanggalBerobat(this.state.tglBerobat),
-        );
-        data.append('is_public', this.context.isPublicNetwork);
-        data.append('receipt', {
-          uri: this.state.image.path,
-          type: this.state.image.mime,
-          name: 'image.jpg',
-        });
-        {
-          subClaimId == null
-            ? data.append('sub_claim', subClaimOptions)
-            : data.append('sub_claim', subClaimOptions[subClaimId].code);
-        }
+      this.context.setLoading(true);
+      const {
+        jenisClaimId,
+        subClaimId,
+        hubunganId,
+        jenisClaimOptions,
+        subClaimOptions,
+        hubunganOptions,
+      } = this.state;
+      var data = new FormData();
+      data.append('id_claim', this.state.idClaim);
+      data.append('nama', this.state.namaPasien);
+      data.append('kode_hub', hubunganOptions[hubunganId].code);
+      data.append('kode_claim', jenisClaimOptions[jenisClaimId].code);
+      data.append('amount', this.state.nilaiClaim);
+      data.append(
+        'tgl_kwitansi',
+        this.getTanggalBerobat(this.state.tglBerobat),
+      );
+      data.append('is_public', this.context.isPublicNetwork);
+      data.append('receipt', {
+        uri: this.state.image.path,
+        type: this.state.image.mime,
+        name: 'image.jpg',
+      });
+      {
+        subClaimId == null
+          ? data.append('sub_claim', subClaimOptions)
+          : data.append('sub_claim', subClaimOptions[subClaimId].code);
+      }
 
-        Axios.post('/claimItem', data, {
-          headers: {
-            'Content-Type': 'multipart/form-data',
-          },
-        })
-          .then((response) => {
-            this.context.setLoading(false);
-            Alert.alert(
-              'Success',
-              `${response.data.message}`,
-              [
-                {
-                  text: 'OK',
-                  onPress: () => {
-                    this.goBack();
-                    // this.props.route.params.goBack();
-                    // this.props.navigation.goBack();
-                  },
-                },
-              ],
+      Axios.post('/claimItem', data, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      })
+        .then((response) => {
+          this.context.setLoading(false);
+          Alert.alert(
+            'Success',
+            `${response.data.message}`,
+            [
               {
-                onDismiss: () => {
+                text: 'OK',
+                onPress: () => {
                   this.goBack();
                 },
               },
-            );
-          })
-          .catch((error) => {
-            this.context.setLoading(false);
-            Alert.alert(
-              // 'Oops!',
-              // JSON.stringify(error),
-              [
-                {
-                  text: 'OK',
-                  onPress: () => null,
-                },
-              ],
-              {onDismiss: () => null},
-            );
-          });
-      }
+            ],
+            {
+              onDismiss: () => {
+                this.goBack();
+              },
+            },
+          );
+        })
+        .catch((error) => {
+          this.context.setLoading(false);
+          Alert.alert(
+            [
+              {
+                text: 'OK',
+                onPress: () => null,
+              },
+            ],
+            {onDismiss: () => null},
+          );
+        });
     }
   };
 
@@ -267,15 +249,94 @@ export class LubScreen extends React.Component {
                     alignSelf: 'center',
                   }}
                 />
+
+                {/* storageId: null, //code_number,type
+      unitId: null, // code_number
+      locationId: null, //id,nama
+      typeId: null, // id_oil_grease,jenis,uom
+      componentId: null, //id_component , component
+      statusId: null, //value , text
+      storageOptions: null, //code_number,type
+      unitOptions: null, // code_number
+      locationOptions: null, //id,nama
+      typeOptions: null, // id_oil_grease,jenis,uom
+      componentOptions: null, //id_component , component
+      statusOptions: null, //value , text */}
+
                 <InputOption
-                  label="Jenis Claim"
+                  label="STORAGE"
                   value={
-                    this.state.jenisClaimId != null &&
-                    this.state.jenisClaimOptions[this.state.jenisClaimId].name
+                    this.state.storageId != null &&
+                    this.state.storageOptions[this.state.storageId].name
                   }
-                  optionData={this.state.jenisClaimOptions}
+                  optionData={this.state.storageOptions}
                   useIndexReturn={true}
-                  onOptionChoose={(val) => this.setState({jenisClaimId: val})}
+                  onOptionChoose={(val) => this.setState({storageId: val})}
+                  hasHelper={false}
+                  style={styles.optiontext}
+                  isSearchable={true}
+                />
+                <InputOption
+                  label="LOCATION"
+                  value={
+                    this.state.locationId != null &&
+                    this.state.locationOptions[this.state.locationId].name
+                  }
+                  optionData={this.state.locationOptions}
+                  useIndexReturn={true}
+                  onOptionChoose={(val) => this.setState({locationId: val})}
+                  hasHelper={false}
+                  style={styles.optiontext}
+                  isSearchable={true}
+                />
+                <InputOption
+                  label="CODE NUMBER"
+                  value={
+                    this.state.unitId != null &&
+                    this.state.unitOptions[this.state.unitId].name
+                  }
+                  optionData={this.state.unitOptions}
+                  useIndexReturn={true}
+                  onOptionChoose={(val) => this.setState({unitId: val})}
+                  hasHelper={false}
+                  style={styles.optiontext}
+                  isSearchable={true}
+                />
+                <InputOption
+                  label="JENIS PELUMAS"
+                  value={
+                    this.state.typeId != null &&
+                    this.state.typeOptions[this.state.typeId].name
+                  }
+                  optionData={this.state.typeOptions}
+                  useIndexReturn={true}
+                  onOptionChoose={(val) => this.setState({typeId: val})}
+                  hasHelper={false}
+                  style={styles.optiontext}
+                  isSearchable={true}
+                />
+                <InputOption
+                  label="KOMPONEN"
+                  value={
+                    this.state.componentId != null &&
+                    this.state.componentOptions[this.state.componentId].name
+                  }
+                  optionData={this.state.componentOptions}
+                  useIndexReturn={true}
+                  onOptionChoose={(val) => this.setState({componentId: val})}
+                  hasHelper={false}
+                  style={styles.optiontext}
+                  isSearchable={true}
+                />
+                <InputOption
+                  label="STATUS"
+                  value={
+                    this.state.statusId != null &&
+                    this.state.statusOptions[this.state.statusId].name
+                  }
+                  optionData={this.state.statusOptions}
+                  useIndexReturn={true}
+                  onOptionChoose={(val) => this.setState({statusId: val})}
                   hasHelper={false}
                   style={styles.optiontext}
                   isSearchable={true}
