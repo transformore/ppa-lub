@@ -26,6 +26,7 @@ import {
   FitToWorkScreen,
   ApprovalScreen,
   ApprovalScreenP2h,
+  LubScreen,
 } from '../screens';
 import {MenuContents} from '../components';
 
@@ -128,6 +129,11 @@ class NewNavigator extends Component {
               name="Hourmeter"
               component={HmOptScreen}
               options={{headerShown: false}}
+            />
+            <Stack.Screen
+              name="Lub"
+              component={LubScreen}
+              options={{headerShown: true}}
             />
             <Stack.Screen
               name="Breakdown"

@@ -449,30 +449,18 @@ class HomeScreen extends Component {
         image: require('../assets/image/menu/repair3D.png'),
         isOprOnly: false,
       },
-      // {
-      //   label: 'Catatan Kehadiran',
-      //   onPress: () => this.props.navigation.navigate('AbsenTest'),
-      //   image: require('../assets/image/menu/hadir3D.png'),
-      //   isOprOnly: false,
-      // },
       {
         label: 'Catatan HM',
         onPress: () => this.props.navigation.navigate('Hourmeter'),
         image: require('../assets/image/menu/hourmeter3D.png'),
         isOprOnly: false,
       },
-      // {
-      //   label: 'Pengajuan Cuti',
-      //   onPress: () => this.props.navigation.navigate('Leaving'),
-      //   image: require('../assets/image/menu/leave3D.png'),
-      //   isOprOnly: false,
-      // },
-      // {
-      //   label: 'Medical Claim',
-      //   onPress: () => this.props.navigation.navigate('Medical'),
-      //   image: require('../assets/image/menu/medic.png'),
-      //   isOprOnly: false,
-      // },
+      {
+        label: 'Oil & Grease',
+        onPress: () => this.props.navigation.navigate('Lub'),
+        image: require('../assets/image/menu/hourmeter3D.png'),
+        isOprOnly: false,
+      },
       {
         label:
           this.context.status.isCheckedIn && !this.context.status.isNonOpr
