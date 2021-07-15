@@ -128,7 +128,7 @@ export class InputOption extends Component {
             {label}
           </Text>
           <Text style={{marginHorizontal: 10}}>:</Text>
-          <Text style={value ? styles.nilai : styles.nilai}>
+          <Text style={value ? styles.nilaiActive : styles.nilai}>
             {value ? `${value}` : '.....'}
           </Text>
 
@@ -285,15 +285,22 @@ const styles = StyleSheet.create({
   },
   labelActive: {
     color: Colors.grey800,
-    fontSize: 16,
+    fontSize: 10,
     marginHorizontal: 5,
-    width: 121,
+    width: 53,
   },
   nilai: {
     color: DefaultTheme.colors.placeholder,
     fontSize: 16,
     marginHorizontal: 5,
     width: 162,
+  },
+  nilaiActive: {
+    color: DefaultTheme.colors.placeholder,
+    fontSize: 16,
+    marginHorizontal: 5,
+    width: 180,
+    fontWeight: 'bold',
   },
   icon: {marginRight: 6.5},
   helper: {

@@ -457,7 +457,7 @@ class HomeScreen extends Component {
       },
       {
         label: 'Oil & Grease',
-        onPress: () => this.props.navigation.navigate('Lub'),
+        onPress: () => this.props.navigation.navigate('LubHistory'),
         image: require('../assets/image/menu/hourmeter3D.png'),
         isOprOnly: false,
       },

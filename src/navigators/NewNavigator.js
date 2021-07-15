@@ -27,6 +27,7 @@ import {
   ApprovalScreen,
   ApprovalScreenP2h,
   LubScreen,
+  LubHistoryScreen,
 } from '../screens';
 import {MenuContents} from '../components';
 
@@ -133,6 +134,11 @@ class NewNavigator extends Component {
             <Stack.Screen
               name="Lub"
               component={LubScreen}
+              options={{headerShown: true}}
+            />
+            <Stack.Screen
+              name="LubHistory"
+              component={LubHistoryScreen}
               options={{headerShown: true}}
             />
             <Stack.Screen

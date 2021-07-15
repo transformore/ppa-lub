@@ -19,6 +19,7 @@ import FitToWorkScreen from './FitToWorkScreen';
 import ApprovalScreen from './ApprovalScreen';
 import ApprovalScreenP2h from './ApprovalScreenP2h';
 import LubScreen from './LubScreen';
+import LubHistoryScreen from './LubHistoryScreen';
 
 export {
   LoginPage,
@@ -42,4 +43,5 @@ export {
   ApprovalScreen,
   ApprovalScreenP2h,
   LubScreen,
+  LubHistoryScreen,
 };

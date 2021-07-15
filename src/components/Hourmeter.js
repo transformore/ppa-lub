@@ -22,15 +22,13 @@ export default class Hourmeter extends Component {
 
   render() {
     return (
-      <View>
-        <NumericInput
-          inputVal={this.props.val}
-          title={'Hourmeter'}
-          subtitle={'Liter'}
-          color={colors.lightred}
-          onKeyPress={this._changeText}
-        />
-      </View>
+      <NumericInput
+        inputVal={this.props.val}
+        title={'Hourmeter'}
+        subtitle={'Liter'}
+        color={colors.lightred}
+        onKeyPress={this._changeText}
+      />
     );
   }
 }

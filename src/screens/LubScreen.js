@@ -65,7 +65,7 @@ export class LubScreen extends React.Component {
   }
 
   goBack = () => {
-    // this.props.route.params.onGoBack();
+    this.props.route.params.goLubHistory();
     this.props.navigation.goBack();
   };
 
@@ -180,15 +180,6 @@ export class LubScreen extends React.Component {
       );
     } else {
       this.setState({loading: true});
-      // alert(this.context.userData.nrp);
-      // alert(this.state.hm);
-      // alert(this.state.volume);
-      // alert(this.state.storageOptions[this.state.storageId].name);
-      // alert(this.state.unitOptions[this.state.unitId].code);
-      // alert(this.state.locationOptions[this.state.locationId].code);
-      // alert(this.state.typeOptions[this.state.typeId].code);
-      // alert(this.state.componentOptions[this.state.componentId].code);
-      // alert(this.state.statusOptions[this.state.statusId].code);
       Axios.post('/oilgreaseFinish', {
         nrp: this.context.userData.nrp,
         hm: this.state.hm,
@@ -250,7 +241,7 @@ export class LubScreen extends React.Component {
           <Appbar.Content title="Grease Oil Transaction" />
         </Appbar.Header>
 
-        <View style={{flex: 1, backgroundColor: Colors.grey200}}>
+        <View style={{flex: 1, backgroundColor: 'transparent'}}>
           {this.state.loading ? (
             <LoadingIndicator />
           ) : this.state.requestError ? (
@@ -261,7 +252,7 @@ export class LubScreen extends React.Component {
                 style={{
                   paddingHorizontal: 13,
                   paddingBottom: 0,
-                  backgroundColor: Colors.white,
+                  // backgroundColor: Colors.white,
                 }}>
                 <View
                   style={{
@@ -315,7 +306,7 @@ export class LubScreen extends React.Component {
                   <TextInput
                     disabled={this.state.hm == null}
                     mode="cotained"
-                    style={{color: 'grey'}}
+                    style={{color: 'grey', fontSize: 25}}
                     label="Nilai Claim"
                     placeholder="....."
                     value={this.state.hm}
@@ -408,24 +399,36 @@ export class LubScreen extends React.Component {
                   isSearchable={true}
                 />
               </View>
-              <View style={{alignSelf: 'center'}}>
-                <TouchableNativeFeedback onPress={() => this.showSendConfirm()}>
-                  <View
-                    style={{
-                      marginTop: 35,
-                      width: width - 2 * h_margin,
-                      height: 50,
-                      backgroundColor: '#F79F1F',
-                      justifyContent: 'center',
-                      alignItems: 'center',
-                      borderRadius: 25,
-                    }}>
-                    <Title style={{color: Colors.white}}>
-                      Simpan dan Kirim
-                    </Title>
-                  </View>
-                </TouchableNativeFeedback>
-              </View>
+              {this.state.volume == null ||
+              this.state.hm == null ||
+              this.state.storageId == null ||
+              this.state.unitId == null ||
+              this.state.locationId == null ||
+              this.state.typeId == null ||
+              this.state.componentId == null ||
+              this.state.statusId == null ? (
+                <View style={{height: 0}} />
+              ) : (
+                <View style={{alignSelf: 'center'}}>
+                  <TouchableNativeFeedback
+                    onPress={() => this.showSendConfirm()}>
+                    <View
+                      style={{
+                        marginTop: 35,
+                        width: width - 2 * h_margin,
+                        height: 50,
+                        backgroundColor: '#F79F1F',
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        borderRadius: 25,
+                      }}>
+                      <Title style={{color: Colors.white}}>
+                        Simpan dan Kirim
+                      </Title>
+                    </View>
+                  </TouchableNativeFeedback>
+                </View>
+              )}
               <View style={{height: 300}} />
               <Divider style={{height: 1.5}} />
             </ScrollView>
@@ -470,7 +473,7 @@ const styles = {
     width: width / 2 - h_margin,
     height: width / 8,
     marginVertical: 5,
-    elevation: 0,
+    elevation: 3,
   },
   optiontext: {
     alignSelf: 'center',
@@ -486,7 +489,7 @@ const styles = {
     width: width - 2 * h_margin,
     height: width / 8,
     marginVertical: 5,
-    elevation: 0,
+    elevation: 3,
   },
   disabletext: {
     elevation: 0,

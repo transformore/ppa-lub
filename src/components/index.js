@@ -17,7 +17,6 @@ import CustomIcon from './CustomIcon';
 import AutoResizeCard from './AutoResizeCard';
 import NumericInput from './NumericInput';
 import Volume from './Volume';
-import Hourmeter from './Hourmeter';
 export {
   ImageMenuItem,
   HomeCarousel,
@@ -38,5 +37,4 @@ export {
   AutoResizeCard,
   NumericInput,
   Volume,
-  Hourmeter,
 };
