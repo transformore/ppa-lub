@@ -21,7 +21,14 @@ import {
 import {ScrollView} from 'react-native-gesture-handler';
 import Axios from 'axios';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
-import {LoadingIndicator, ErrorData, InputOption} from '../components';
+import {
+  LoadingIndicator,
+  ErrorData,
+  InputOption,
+  AutoResizeCard,
+  Volume,
+} from '../components';
+import {colors} from '../styles';
 import {AppContext} from '../context';
 import Modal from 'react-native-modal';
 import {AppExt} from '../utils';
@@ -35,7 +42,7 @@ export class LubScreen extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      loading: true,
+      loading: false,
       refreshing: false,
       requestError: false,
       keyboardState: 'closed',
@@ -51,17 +58,44 @@ export class LubScreen extends React.Component {
       typeOptions: null, // id_oil_grease,jenis,uom
       componentOptions: null, //id_component , component
       statusOptions: null, //value , text
+
+      selectedCard: null,
+      volume: null,
     };
   }
 
   goBack = () => {
-    this.props.route.params.onGoBack();
+    // this.props.route.params.onGoBack();
     this.props.navigation.goBack();
+  };
+
+  showSendConfirm = () => {
+    Alert.alert(
+      'Confirmation',
+      `Apakah pengisian sudah benar ?      CN:${
+        this.state.unitOptions[this.state.unitId].code
+      }  HM:${this.state.hm}  Volume:${this.state.volume} ${
+        this.state.typeOptions[this.state.typeId].uom
+      }`,
+      [
+        {text: 'Confirm', onPress: () => this.handleKirim()},
+        {
+          text: 'Cancel',
+          onPress: () => null,
+          style: 'cancel',
+        },
+      ],
+      {cancelable: false},
+    );
   };
 
   componentDidMount() {
     this.getLubData();
   }
+  _selectCard = (id) => {
+    this.setState({selectedCard: id});
+  };
+  _setVolume = (val) => this.setState({volume: val});
 
   getLubData = () => {
     this.setState({loading: true});
@@ -77,7 +111,7 @@ export class LubScreen extends React.Component {
           code: item.id,
           name: item.nama,
         }));
-        const formattedUnit = res.data.type.map((item, index) => ({
+        const formattedUnit = res.data.unit.map((item, index) => ({
           id: index,
           code: item.code_number,
           name: item.code_number,
@@ -123,13 +157,15 @@ export class LubScreen extends React.Component {
   };
 
   handleKirim = () => {
-    const sisaplafon = parseFloat(this.state.plafon.plafonSkrg);
-
     if (
-      this.state.tglBerobat == null ||
-      ((this.state.jenisClaimOptions[this.state.jenisClaimId].code == 'LEN' ||
-        this.state.jenisClaimOptions[this.state.jenisClaimId].code == 'SCH') &&
-        this.state.subClaimId == null)
+      this.state.volume == null ||
+      this.state.hm == null ||
+      this.state.storageId == null ||
+      this.state.unitId == null ||
+      this.state.locationId == null ||
+      this.state.typeId == null ||
+      this.state.componentId == null ||
+      this.state.statusId == null
     ) {
       Alert.alert(
         'Oops!',
@@ -143,44 +179,29 @@ export class LubScreen extends React.Component {
         {onDismiss: () => null},
       );
     } else {
-      this.context.setLoading(true);
-      const {
-        jenisClaimId,
-        subClaimId,
-        hubunganId,
-        jenisClaimOptions,
-        subClaimOptions,
-        hubunganOptions,
-      } = this.state;
-      var data = new FormData();
-      data.append('id_claim', this.state.idClaim);
-      data.append('nama', this.state.namaPasien);
-      data.append('kode_hub', hubunganOptions[hubunganId].code);
-      data.append('kode_claim', jenisClaimOptions[jenisClaimId].code);
-      data.append('amount', this.state.nilaiClaim);
-      data.append(
-        'tgl_kwitansi',
-        this.getTanggalBerobat(this.state.tglBerobat),
-      );
-      data.append('is_public', this.context.isPublicNetwork);
-      data.append('receipt', {
-        uri: this.state.image.path,
-        type: this.state.image.mime,
-        name: 'image.jpg',
-      });
-      {
-        subClaimId == null
-          ? data.append('sub_claim', subClaimOptions)
-          : data.append('sub_claim', subClaimOptions[subClaimId].code);
-      }
-
-      Axios.post('/claimItem', data, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
+      this.setState({loading: true});
+      // alert(this.context.userData.nrp);
+      // alert(this.state.hm);
+      // alert(this.state.volume);
+      // alert(this.state.storageOptions[this.state.storageId].name);
+      // alert(this.state.unitOptions[this.state.unitId].code);
+      // alert(this.state.locationOptions[this.state.locationId].code);
+      // alert(this.state.typeOptions[this.state.typeId].code);
+      // alert(this.state.componentOptions[this.state.componentId].code);
+      // alert(this.state.statusOptions[this.state.statusId].code);
+      Axios.post('/oilgreaseFinish', {
+        nrp: this.context.userData.nrp,
+        hm: this.state.hm,
+        qty: this.state.volume,
+        storage: this.state.storageOptions[this.state.storageId].name,
+        unit: this.state.unitOptions[this.state.unitId].code,
+        loc: this.state.locationOptions[this.state.locationId].code,
+        type: this.state.typeOptions[this.state.typeId].code,
+        component: this.state.componentOptions[this.state.componentId].code,
+        status: this.state.statusOptions[this.state.statusId].code,
       })
         .then((response) => {
-          this.context.setLoading(false);
+          this.setState({loading: false});
           Alert.alert(
             'Success',
             `${response.data.message}`,
@@ -249,20 +270,6 @@ export class LubScreen extends React.Component {
                     alignSelf: 'center',
                   }}
                 />
-
-                {/* storageId: null, //code_number,type
-      unitId: null, // code_number
-      locationId: null, //id,nama
-      typeId: null, // id_oil_grease,jenis,uom
-      componentId: null, //id_component , component
-      statusId: null, //value , text
-      storageOptions: null, //code_number,type
-      unitOptions: null, // code_number
-      locationOptions: null, //id,nama
-      typeOptions: null, // id_oil_grease,jenis,uom
-      componentOptions: null, //id_component , component
-      statusOptions: null, //value , text */}
-
                 <InputOption
                   label="STORAGE"
                   value={
@@ -302,6 +309,20 @@ export class LubScreen extends React.Component {
                   style={styles.optiontext}
                   isSearchable={true}
                 />
+                <View style={styles.optiontext}>
+                  <Text style={{marginLeft: 10, width: 121}}>HOURMETER</Text>
+                  <Text style={{marginHorizontal: 10}}>:</Text>
+                  <TextInput
+                    disabled={this.state.hm == null}
+                    mode="cotained"
+                    style={{color: 'grey'}}
+                    label="Nilai Claim"
+                    placeholder="....."
+                    value={this.state.hm}
+                    keyboardType="numeric"
+                    onChangeText={(text) => this.setState({hm: text})}
+                  />
+                </View>
                 <InputOption
                   label="JENIS PELUMAS"
                   value={
@@ -315,6 +336,51 @@ export class LubScreen extends React.Component {
                   style={styles.optiontext}
                   isSearchable={true}
                 />
+                {this.state.typeId !== null ? (
+                  <View>
+                    <AutoResizeCard
+                      selected={this.state.selectedCard}
+                      id={3}
+                      onPress={() => this._selectCard(3)}
+                      icon={'opacity'}
+                      idleVal={this.state.volume}
+                      // idleTitle={'Volume'}
+                      idleTitle={this.state.typeOptions[this.state.typeId].uom}
+                      color={colors.yellow}>
+                      <Volume
+                        val={this.state.volume}
+                        onSet={this._setVolume}
+                        ref="volumeRef"
+                        {...this.props}
+                      />
+                    </AutoResizeCard>
+                    {this.state.selectedCard == null ||
+                    this.state.selectedCard == 5 ? (
+                      <View style={{height: 0}} />
+                    ) : (
+                      <Button
+                        loading={this.state.loading}
+                        dark
+                        // color={colors.primary}
+                        mode="contained"
+                        onPress={() => this._selectCard(5)}
+                        style={{
+                          width: 260,
+                          marginHorizontal: 50,
+                          marginTop: 20,
+                          paddingVertical: 8,
+                          fontSize: 25,
+                          borderRadius: 28,
+                          backgroundColor: '#F79F1F',
+                          alignSelf: 'center',
+                        }}>
+                        Enter
+                      </Button>
+                    )}
+                  </View>
+                ) : (
+                  <View style={{height: 0}} />
+                )}
                 <InputOption
                   label="KOMPONEN"
                   value={
@@ -342,6 +408,24 @@ export class LubScreen extends React.Component {
                   isSearchable={true}
                 />
               </View>
+              <View style={{alignSelf: 'center'}}>
+                <TouchableNativeFeedback onPress={() => this.showSendConfirm()}>
+                  <View
+                    style={{
+                      marginTop: 35,
+                      width: width - 2 * h_margin,
+                      height: 50,
+                      backgroundColor: '#F79F1F',
+                      justifyContent: 'center',
+                      alignItems: 'center',
+                      borderRadius: 25,
+                    }}>
+                    <Title style={{color: Colors.white}}>
+                      Simpan dan Kirim
+                    </Title>
+                  </View>
+                </TouchableNativeFeedback>
+              </View>
               <View style={{height: 300}} />
               <Divider style={{height: 1.5}} />
             </ScrollView>
@@ -349,7 +433,7 @@ export class LubScreen extends React.Component {
         </View>
 
         <Modal
-          isVisible={this.context.isLoading}
+          isVisible={this.state.loading}
           style={{justifyContent: 'center', alignItems: 'center'}}>
           <View
             style={{
@@ -392,7 +476,7 @@ const styles = {
     alignSelf: 'center',
     alignItems: 'center',
     flexDirection: 'row',
-    paddingHorizontal: 25,
+    paddingHorizontal: 15,
     // borderColor: '#0984e3',
     borderColor: '#F79F1F',
     // backgroundColor: '#81ecec',

@@ -125,7 +125,11 @@ export class InputOption extends Component {
           }}
           onPress={this.toggleModal}>
           <Text style={value ? styles.labelActive : styles.labelInactive}>
-            {value ? `${label}: ${value}` : label}
+            {label}
+          </Text>
+          <Text style={{marginHorizontal: 10}}>:</Text>
+          <Text style={value ? styles.nilai : styles.nilai}>
+            {value ? `${value}` : '.....'}
           </Text>
 
           {isLoading ? (
@@ -275,16 +279,21 @@ const styles = StyleSheet.create({
   },
   labelInactive: {
     color: DefaultTheme.colors.placeholder,
-    // color: 'red',
-    // backgroundColor: 'yellow',
     fontSize: 16,
     marginHorizontal: 5,
+    width: 121,
   },
   labelActive: {
-    // color: DefaultTheme.colors.text,
     color: Colors.grey800,
     fontSize: 16,
     marginHorizontal: 5,
+    width: 121,
+  },
+  nilai: {
+    color: DefaultTheme.colors.placeholder,
+    fontSize: 16,
+    marginHorizontal: 5,
+    width: 162,
   },
   icon: {marginRight: 6.5},
   helper: {
