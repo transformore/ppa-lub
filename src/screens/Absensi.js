@@ -341,24 +341,6 @@ const AttendanceRevision = ({isVisible = false, onHide}) => {
     }-${tanggal.getDate() < 10 ? '0' : ''}${tanggal.getDate()}`;
   };
 
-  // const getRosterWarn = () => {
-  //   {
-  //     haswh == '0' && isDatePickerVisible
-  //       ? Alert.alert(
-  //           'Oops!',
-  //           'Cek Roster Anda !!',
-  //           [
-  //             {
-  //               text: 'OK',
-  //               onPress: () => hideDatePicker(),
-  //             },
-  //           ],
-  //           {onDismiss: () => null},
-  //         )
-  //       : setHasWh('0');
-  //   }
-  // };
-
   const getWaktu = (tanggal) => {
     var datetext = tanggal.toTimeString();
     datetext = datetext.split(' ')[0];
