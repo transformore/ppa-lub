@@ -62,7 +62,7 @@ export default class AppProvider extends Component {
 
     isLoading: false,
     lastParkingLocationDialogVisible: false,
-    // isApprovalUpdate: true,
+    volume: null,
   };
 
   setOperate = (isOperate) => {
@@ -448,6 +448,7 @@ export default class AppProvider extends Component {
           setNetwork: this.setNetwork,
           setBaseUrl: this.setBaseUrl,
           setPhoto: this.setPhoto,
+          volume: this.volume,
         }}>
         {this.props.children}
       </AppContext.Provider>

@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {Text, View} from 'react-native';
-
+import {AppContext} from '../context';
 import {NumericInput} from '../components';
 import {colors} from '../styles';
 
@@ -18,6 +18,7 @@ export default class Volume extends Component {
     }
 
     this.props.onSet(volume);
+    // this.context.setState({volume: volume});
   };
 
   render() {
@@ -32,3 +33,4 @@ export default class Volume extends Component {
     );
   }
 }
+Volume.contextType = AppContext;

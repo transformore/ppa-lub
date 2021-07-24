@@ -262,6 +262,68 @@ export class LubScreen extends React.Component {
                   }}
                 />
                 <InputOption
+                  label="JENIS PELUMAS"
+                  value={
+                    this.state.typeId != null &&
+                    this.state.typeOptions[this.state.typeId].name
+                  }
+                  optionData={this.state.typeOptions}
+                  useIndexReturn={true}
+                  onOptionChoose={(val) => this.setState({typeId: val})}
+                  hasHelper={false}
+                  style={
+                    this.state.typeId == null
+                      ? styles.optiontext
+                      : styles.lubTypeText
+                  }
+                  isSearchable={true}
+                />
+                {this.state.typeId !== null ? (
+                  <View>
+                    <AutoResizeCard
+                      selected={this.state.selectedCard}
+                      id={3}
+                      onPress={() => this._selectCard(3)}
+                      icon={'opacity'}
+                      idleVal={this.state.volume}
+                      idleTitle={'Volume'}
+                      color={colors.yellow}>
+                      <Volume
+                        val={this.state.volume}
+                        // val={2345}
+                        onSet={this._setVolume}
+                        ref="volumeRef"
+                        {...this.props}
+                      />
+                    </AutoResizeCard>
+                    {this.state.selectedCard == null ||
+                    this.state.selectedCard == 5 ? (
+                      <View style={{height: 0}} />
+                    ) : (
+                      <Button
+                        loading={this.state.loading}
+                        dark
+                        // color={colors.primary}
+                        mode="contained"
+                        onPress={() => this._selectCard(5)}
+                        style={{
+                          width: 260,
+                          marginHorizontal: 50,
+                          marginTop: 20,
+                          paddingVertical: 8,
+                          fontSize: 25,
+                          borderRadius: 28,
+                          backgroundColor: '#F79F1F',
+                          alignSelf: 'center',
+                        }}>
+                        Enter
+                      </Button>
+                    )}
+                  </View>
+                ) : (
+                  <View style={{height: 0}} />
+                )}
+                <InputOption
                   label="STORAGE"
                   value={
                     this.state.storageId != null &&
@@ -307,71 +369,13 @@ export class LubScreen extends React.Component {
                     disabled={this.state.hm == null}
                     mode="cotained"
                     style={{color: 'grey', fontSize: 25}}
-                    label="Nilai Claim"
+                    label="Volume"
                     placeholder="....."
                     value={this.state.hm}
                     keyboardType="numeric"
                     onChangeText={(text) => this.setState({hm: text})}
                   />
                 </View>
-                <InputOption
-                  label="JENIS PELUMAS"
-                  value={
-                    this.state.typeId != null &&
-                    this.state.typeOptions[this.state.typeId].name
-                  }
-                  optionData={this.state.typeOptions}
-                  useIndexReturn={true}
-                  onOptionChoose={(val) => this.setState({typeId: val})}
-                  hasHelper={false}
-                  style={styles.optiontext}
-                  isSearchable={true}
-                />
-                {this.state.typeId !== null ? (
-                  <View>
-                    <AutoResizeCard
-                      selected={this.state.selectedCard}
-                      id={3}
-                      onPress={() => this._selectCard(3)}
-                      icon={'opacity'}
-                      idleVal={this.state.volume}
-                      // idleTitle={'Volume'}
-                      idleTitle={this.state.typeOptions[this.state.typeId].uom}
-                      color={colors.yellow}>
-                      <Volume
-                        val={this.state.volume}
-                        onSet={this._setVolume}
-                        ref="volumeRef"
-                        {...this.props}
-                      />
-                    </AutoResizeCard>
-                    {this.state.selectedCard == null ||
-                    this.state.selectedCard == 5 ? (
-                      <View style={{height: 0}} />
-                    ) : (
-                      <Button
-                        loading={this.state.loading}
-                        dark
-                        // color={colors.primary}
-                        mode="contained"
-                        onPress={() => this._selectCard(5)}
-                        style={{
-                          width: 260,
-                          marginHorizontal: 50,
-                          marginTop: 20,
-                          paddingVertical: 8,
-                          fontSize: 25,
-                          borderRadius: 28,
-                          backgroundColor: '#F79F1F',
-                          alignSelf: 'center',
-                        }}>
-                        Enter
-                      </Button>
-                    )}
-                  </View>
-                ) : (
-                  <View style={{height: 0}} />
-                )}
                 <InputOption
                   label="KOMPONEN"
                   value={
@@ -487,7 +491,23 @@ const styles = {
     borderWidth: 0.5,
     borderRadius: width / 16,
     width: width - 2 * h_margin,
-    height: width / 8,
+    height: 50,
+    marginVertical: 5,
+    elevation: 3,
+  },
+  lubTypeText: {
+    alignSelf: 'center',
+    alignItems: 'center',
+    flexDirection: 'row',
+    paddingHorizontal: 15,
+    // borderColor: '#0984e3',
+    borderColor: '#F79F1F',
+    // backgroundColor: '#81ecec',
+    backgroundColor: '#dff9fb',
+    borderWidth: 0.5,
+    borderRadius: width / 16,
+    width: width - 2 * h_margin,
+    height: 70,
     marginVertical: 5,
     elevation: 3,
   },

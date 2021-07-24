@@ -187,7 +187,7 @@ class LoginPage extends Component {
                   marginBottom: 20,
                 }}>
                 <Text style={{fontSize: 35, fontWeight: 'bold'}}>PPA</Text>
-                <Text style={styles.logo}>Teamwork</Text>
+                <Text style={styles.logo}>Oil&Grease</Text>
               </View>
               <View style={{zIndex: 2}}>
                 <TouchableNativeFeedback

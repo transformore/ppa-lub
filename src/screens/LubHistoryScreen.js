@@ -98,10 +98,10 @@ class LubHistory extends Component {
           translucent={false}
         />
 
-        <Appbar.Header style={{zIndex: 3}}>
+        {/* <Appbar.Header style={{zIndex: 3}}>
           <Appbar.BackAction onPress={() => this.props.navigation.goBack()} />
-          <Appbar.Content title="Oil Grease Transaction History" />
-          {/* <Appbar.Action
+          <Appbar.Content title="Oil Grease Transaction History" /> */}
+        {/* <Appbar.Action
             disabled={this.state.loading}
             icon="download"
             size={32}
@@ -116,7 +116,7 @@ class LubHistory extends Component {
               );
             }}
           /> */}
-        </Appbar.Header>
+        {/* </Appbar.Header> */}
         <View
           style={{
             backgroundColor: '#0984e3',
