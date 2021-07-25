@@ -287,7 +287,7 @@ const styles = StyleSheet.create({
     color: Colors.grey800,
     fontSize: 10,
     marginHorizontal: 5,
-    width: 53,
+    width: 58,
   },
   nilai: {
     color: DefaultTheme.colors.placeholder,

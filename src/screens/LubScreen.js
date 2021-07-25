@@ -17,6 +17,7 @@ import {
   ActivityIndicator,
   Divider,
   Button,
+  DefaultTheme,
 } from 'react-native-paper';
 import {ScrollView} from 'react-native-gesture-handler';
 import Axios from 'axios';
@@ -61,6 +62,7 @@ export class LubScreen extends React.Component {
 
       selectedCard: null,
       volume: null,
+      uom: null,
     };
   }
 
@@ -93,12 +95,15 @@ export class LubScreen extends React.Component {
     this.getLubData();
   }
   _selectCard = (id) => {
-    this.setState({selectedCard: id});
+    this.context.setSelectedCard(id);
   };
+  // _selectCard = (id) => {
+  //   this.setState({selectedCard: id});
+  // };
   _setVolume = (val) => this.setState({volume: val});
 
   getLubData = () => {
-    this.setState({loading: true});
+    // this.setState({loading: true});
     Axios.get(`/oilgreaseForm/${this.context.userData.nrp}`)
       .then((res) => {
         const formattedStorage = res.data.storage.map((item, index) => ({
@@ -252,12 +257,11 @@ export class LubScreen extends React.Component {
                 style={{
                   paddingHorizontal: 13,
                   paddingBottom: 0,
-                  // backgroundColor: Colors.white,
                 }}>
                 <View
                   style={{
                     flexDirection: 'row',
-                    marginVertical: 20,
+                    marginVertical: 10,
                     alignSelf: 'center',
                   }}
                 />
@@ -273,25 +277,26 @@ export class LubScreen extends React.Component {
                   hasHelper={false}
                   style={
                     this.state.typeId == null
-                      ? styles.optiontext
-                      : styles.lubTypeText
+                      ? styles.optiontextborder
+                      : styles.lubTypeTextBorder
                   }
                   isSearchable={true}
                 />
                 {this.state.typeId !== null ? (
                   <View>
                     <AutoResizeCard
-                      selected={this.state.selectedCard}
+                      selected={this.context.selectedCard}
                       id={3}
                       onPress={() => this._selectCard(3)}
                       icon={'opacity'}
                       idleVal={this.state.volume}
-                      idleTitle={'Volume'}
+                      idleTitle={this.state.typeOptions[this.state.typeId].uom}
+                      // idleTitle={'Volume'}
                       color={colors.yellow}>
                       <Volume
                         val={this.state.volume}
-                        // val={2345}
                         onSet={this._setVolume}
+                        uom={this.state.typeOptions[this.state.typeId].uom}
                         ref="volumeRef"
                         {...this.props}
                       />
@@ -333,7 +338,11 @@ export class LubScreen extends React.Component {
                   useIndexReturn={true}
                   onOptionChoose={(val) => this.setState({storageId: val})}
                   hasHelper={false}
-                  style={styles.optiontext}
+                  style={
+                    this.state.storageId == null
+                      ? styles.optiontextborder
+                      : styles.disableBorder
+                  }
                   isSearchable={true}
                 />
                 <InputOption
@@ -346,7 +355,11 @@ export class LubScreen extends React.Component {
                   useIndexReturn={true}
                   onOptionChoose={(val) => this.setState({locationId: val})}
                   hasHelper={false}
-                  style={styles.optiontext}
+                  style={
+                    this.state.locationId == null
+                      ? styles.optiontextborder
+                      : styles.disableBorder
+                  }
                   isSearchable={true}
                 />
                 <InputOption
@@ -359,11 +372,27 @@ export class LubScreen extends React.Component {
                   useIndexReturn={true}
                   onOptionChoose={(val) => this.setState({unitId: val})}
                   hasHelper={false}
-                  style={styles.optiontext}
+                  style={
+                    this.state.unitId == null
+                      ? styles.optiontextborder
+                      : styles.disableBorder
+                  }
                   isSearchable={true}
                 />
-                <View style={styles.optiontext}>
-                  <Text style={{marginLeft: 10, width: 121}}>HOURMETER</Text>
+                <View
+                  style={
+                    this.state.hm == null
+                      ? styles.optiontextborder
+                      : styles.disableBorder
+                  }>
+                  <Text
+                    style={
+                      this.state.hm == null
+                        ? styles.labelInactive
+                        : styles.labelActive
+                    }>
+                    HOURMETER
+                  </Text>
                   <Text style={{marginHorizontal: 10}}>:</Text>
                   <TextInput
                     disabled={this.state.hm == null}
@@ -386,7 +415,11 @@ export class LubScreen extends React.Component {
                   useIndexReturn={true}
                   onOptionChoose={(val) => this.setState({componentId: val})}
                   hasHelper={false}
-                  style={styles.optiontext}
+                  style={
+                    this.state.componentId == null
+                      ? styles.optiontextborder
+                      : styles.disableBorder
+                  }
                   isSearchable={true}
                 />
                 <InputOption
@@ -399,7 +432,11 @@ export class LubScreen extends React.Component {
                   useIndexReturn={true}
                   onOptionChoose={(val) => this.setState({statusId: val})}
                   hasHelper={false}
-                  style={styles.optiontext}
+                  style={
+                    this.state.statusId == null
+                      ? styles.optiontextborder
+                      : styles.disableBorder
+                  }
                   isSearchable={true}
                 />
               </View>
@@ -464,30 +501,13 @@ export class LubScreen extends React.Component {
 }
 
 const styles = {
-  inputtext: {
-    alignSelf: 'center',
-    alignItems: 'center',
-    justifyContent: 'center',
-    flexDirection: 'row',
-    paddingHorizontal: 15,
-    borderColor: '#0984e3',
-    // borderColor: '#F79F1F',
-    borderWidth: 0.5,
-    borderRadius: width / 16,
-    width: width / 2 - h_margin,
-    height: width / 8,
-    marginVertical: 5,
-    elevation: 3,
-  },
-  optiontext: {
+  optiontextborder: {
     alignSelf: 'center',
     alignItems: 'center',
     flexDirection: 'row',
     paddingHorizontal: 15,
-    // borderColor: '#0984e3',
     borderColor: '#F79F1F',
-    // backgroundColor: '#81ecec',
-    backgroundColor: '#dff9fb',
+    backgroundColor: '#ffdd59',
     borderWidth: 0.5,
     borderRadius: width / 16,
     width: width - 2 * h_margin,
@@ -495,32 +515,47 @@ const styles = {
     marginVertical: 5,
     elevation: 3,
   },
-  lubTypeText: {
+  disableBorder: {
     alignSelf: 'center',
     alignItems: 'center',
     flexDirection: 'row',
     paddingHorizontal: 15,
-    // borderColor: '#0984e3',
-    borderColor: '#F79F1F',
-    // backgroundColor: '#81ecec',
-    backgroundColor: '#dff9fb',
+    borderColor: colors.silverGrey,
+    backgroundColor: colors.silverGrey,
     borderWidth: 0.5,
+    borderRadius: width / 16,
+    width: width - 2 * h_margin,
+    height: 50,
+    marginVertical: 5,
+    elevation: 3,
+  },
+  lubTypeTextBorder: {
+    alignSelf: 'center',
+    alignItems: 'center',
+    flexDirection: 'row',
+    paddingHorizontal: 15,
+    borderColor: colors.silverGrey,
+    backgroundColor: colors.silverGrey,
+    borderWidth: 0,
     borderRadius: width / 16,
     width: width - 2 * h_margin,
     height: 70,
     marginVertical: 5,
     elevation: 3,
   },
-  disabletext: {
-    elevation: 0,
-    marginVertical: 5,
-    paddingHorizontal: 25,
-    borderWidth: 0.5,
-    borderRadius: width / 16,
-    width: width / 2 - 2 * h_margin,
-    borderColor: 'grey',
-    backgroundColor: 'grey',
-    color: 'white',
+  labelInactive: {
+    color: DefaultTheme.colors.placeholder,
+    fontSize: 16,
+    marginHorizontal: 5,
+    width: 115,
+    textAlign: 'left',
+    marginLeft: 15,
+  },
+  labelActive: {
+    color: DefaultTheme.colors.placeholder,
+    fontSize: 10,
+    marginLeft: 15,
+    width: 65,
   },
 };
 

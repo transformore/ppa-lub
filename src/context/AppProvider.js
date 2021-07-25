@@ -63,8 +63,12 @@ export default class AppProvider extends Component {
     isLoading: false,
     lastParkingLocationDialogVisible: false,
     volume: null,
+    selectedCard: null,
   };
 
+  setSelectedCard = (card) => {
+    this.setState({selectedCard: card});
+  };
   setOperate = (isOperate) => {
     this.state({isOperate: isOperate});
   };
@@ -449,6 +453,8 @@ export default class AppProvider extends Component {
           setBaseUrl: this.setBaseUrl,
           setPhoto: this.setPhoto,
           volume: this.volume,
+          setSelectedCard: this.setSelectedCard,
+          selectedCard: this.state.selectedCard,
         }}>
         {this.props.children}
       </AppContext.Provider>

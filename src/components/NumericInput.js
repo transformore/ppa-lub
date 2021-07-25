@@ -2,7 +2,12 @@ import React from 'react';
 import {View, Text, TouchableNativeFeedback} from 'react-native';
 import {Divider, TouchableRipple} from 'react-native-paper';
 import {colors} from '../styles';
+import {AppContext} from '../context';
 
+const setSelectedCard = () => {
+  let card = 5;
+  return this.context.setSelectedCard(card);
+};
 const NumericInput = (props) => {
   return (
     <View style={{flex: 1}}>
@@ -11,10 +16,10 @@ const NumericInput = (props) => {
           style={{
             flex: 1,
             alignItems: 'flex-end',
-            paddingVertical: 15,
-            paddingHorizontal: 25,
+            paddingVertical: 5,
+            paddingHorizontal: 12,
           }}>
-          <Text style={props.inputVal ? {fontSize: 30} : {fontSize: 30}}>
+          <Text style={props.inputVal ? {fontSize: 40} : {fontSize: 30}}>
             {props.inputVal ? props.inputVal : props.title}
           </Text>
         </View>
@@ -25,139 +30,94 @@ const NumericInput = (props) => {
             paddingHorizontal: 25,
             backgroundColor: props.color,
           }}>
-          <Text style={{fontSize: 30, color: '#fff'}}>{props.subtitle}</Text>
+          <Text style={{fontSize: 25, color: '#fff'}}>{props.subtitle}</Text>
         </View>
       </View>
       <Divider />
-      {/* button */}
       <View style={{flex: 1}}>
+        <View style={{height: 20}} />
         <View style={{flex: 1, flexDirection: 'row'}}>
           <TouchableNativeFeedback
             delayPressIn={0}
-            background={TouchableNativeFeedback.Ripple(colors.grey)}
+            background={TouchableNativeFeedback.Ripple(colors.deeppurple)}
             onPress={() => props.onKeyPress('7')}>
-            <View
-              style={{
-                flex: 1,
-                justifyContent: 'center',
-                alignItems: 'center',
-              }}>
-              <Text style={{fontSize: 40}}>7</Text>
+            <View style={styles.numberPad}>
+              <Text style={styles.numberColor}>7</Text>
             </View>
           </TouchableNativeFeedback>
           <TouchableNativeFeedback
             delayPressIn={0}
-            background={TouchableNativeFeedback.Ripple(colors.grey)}
+            background={TouchableNativeFeedback.Ripple(colors.deeppurple)}
             onPress={() => props.onKeyPress('8')}>
-            <View
-              style={{
-                flex: 1,
-                justifyContent: 'center',
-                alignItems: 'center',
-              }}>
-              <Text style={{fontSize: 40}}>8</Text>
+            <View style={styles.numberPad}>
+              <Text style={styles.numberColor}>8</Text>
             </View>
           </TouchableNativeFeedback>
           <TouchableNativeFeedback
             delayPressIn={0}
-            background={TouchableNativeFeedback.Ripple(colors.grey)}
+            background={TouchableNativeFeedback.Ripple(colors.deeppurple)}
             onPress={() => props.onKeyPress('9')}>
-            <View
-              style={{
-                flex: 1,
-                justifyContent: 'center',
-                alignItems: 'center',
-              }}>
-              <Text style={{fontSize: 40}}>9</Text>
+            <View style={styles.numberPad}>
+              <Text style={styles.numberColor}>9</Text>
             </View>
           </TouchableNativeFeedback>
         </View>
         <View style={{flex: 1, flexDirection: 'row'}}>
           <TouchableNativeFeedback
             delayPressIn={0}
-            background={TouchableNativeFeedback.Ripple(colors.grey)}
+            background={TouchableNativeFeedback.Ripple(colors.deeppurple)}
             onPress={() => props.onKeyPress('4')}>
-            <View
-              style={{
-                flex: 1,
-                justifyContent: 'center',
-                alignItems: 'center',
-              }}>
-              <Text style={{fontSize: 40}}>4</Text>
+            <View style={styles.numberPad}>
+              <Text style={styles.numberColor}>4</Text>
             </View>
           </TouchableNativeFeedback>
           <TouchableNativeFeedback
             delayPressIn={0}
-            background={TouchableNativeFeedback.Ripple(colors.grey)}
+            background={TouchableNativeFeedback.Ripple(colors.deeppurple)}
             onPress={() => props.onKeyPress('5')}>
-            <View
-              style={{
-                flex: 1,
-                justifyContent: 'center',
-                alignItems: 'center',
-              }}>
-              <Text style={{fontSize: 40}}>5</Text>
+            <View style={styles.numberPad}>
+              <Text style={styles.numberColor}>5</Text>
             </View>
           </TouchableNativeFeedback>
           <TouchableNativeFeedback
             delayPressIn={0}
-            background={TouchableNativeFeedback.Ripple(colors.grey)}
+            background={TouchableNativeFeedback.Ripple(colors.deeppurple)}
             onPress={() => props.onKeyPress('6')}>
-            <View
-              style={{
-                flex: 1,
-                justifyContent: 'center',
-                alignItems: 'center',
-              }}>
-              <Text style={{fontSize: 40}}>6</Text>
+            <View style={styles.numberPad}>
+              <Text style={styles.numberColor}>6</Text>
             </View>
           </TouchableNativeFeedback>
         </View>
         <View style={{flex: 1, flexDirection: 'row'}}>
           <TouchableNativeFeedback
             delayPressIn={0}
-            background={TouchableNativeFeedback.Ripple(colors.grey)}
+            background={TouchableNativeFeedback.Ripple(colors.deeppurple)}
             onPress={() => props.onKeyPress('1')}>
-            <View
-              style={{
-                flex: 1,
-                justifyContent: 'center',
-                alignItems: 'center',
-              }}>
-              <Text style={{fontSize: 40}}>1</Text>
+            <View style={styles.numberPad}>
+              <Text style={styles.numberColor}>1</Text>
             </View>
           </TouchableNativeFeedback>
           <TouchableNativeFeedback
             delayPressIn={0}
-            background={TouchableNativeFeedback.Ripple(colors.grey)}
+            background={TouchableNativeFeedback.Ripple(colors.deeppurple)}
             onPress={() => props.onKeyPress('2')}>
-            <View
-              style={{
-                flex: 1,
-                justifyContent: 'center',
-                alignItems: 'center',
-              }}>
-              <Text style={{fontSize: 40}}>2</Text>
+            <View style={styles.numberPad}>
+              <Text style={styles.numberColor}>2</Text>
             </View>
           </TouchableNativeFeedback>
           <TouchableNativeFeedback
             delayPressIn={0}
-            background={TouchableNativeFeedback.Ripple(colors.grey)}
+            background={TouchableNativeFeedback.Ripple(colors.deeppurple)}
             onPress={() => props.onKeyPress('3')}>
-            <View
-              style={{
-                flex: 1,
-                justifyContent: 'center',
-                alignItems: 'center',
-              }}>
-              <Text style={{fontSize: 40}}>3</Text>
+            <View style={styles.numberPad}>
+              <Text style={styles.numberColor}>3</Text>
             </View>
           </TouchableNativeFeedback>
         </View>
         <View style={{flex: 1, flexDirection: 'row'}}>
           <TouchableNativeFeedback
             delayPressIn={0}
-            background={TouchableNativeFeedback.Ripple(colors.grey)}
+            background={TouchableNativeFeedback.Ripple(colors.deeppurple)}
             onPress={() => props.onKeyPress('.')}>
             <View
               style={{
@@ -170,34 +130,58 @@ const NumericInput = (props) => {
           </TouchableNativeFeedback>
           <TouchableNativeFeedback
             delayPressIn={0}
-            background={TouchableNativeFeedback.Ripple(colors.grey)}
+            background={TouchableNativeFeedback.Ripple(colors.deeppurple)}
             onPress={() => props.onKeyPress('0')}>
-            <View
-              style={{
-                flex: 1,
-                justifyContent: 'center',
-                alignItems: 'center',
-              }}>
-              <Text style={{fontSize: 40}}>0</Text>
+            <View style={styles.numberPad}>
+              <Text style={{fontSize: 40, color: colors.white}}>0</Text>
             </View>
           </TouchableNativeFeedback>
           <TouchableNativeFeedback
             delayPressIn={0}
             background={TouchableNativeFeedback.Ripple(colors.lightred)}
             onPress={() => props.onKeyPress('C')}>
-            <View
-              style={{
-                flex: 1,
-                justifyContent: 'center',
-                alignItems: 'center',
-              }}>
+            <View style={styles.cPad}>
               <Text style={{fontSize: 40}}>C</Text>
             </View>
           </TouchableNativeFeedback>
         </View>
+        <View style={styles.cPad}>
+          <TouchableNativeFeedback
+            delayPressIn={0}
+            background={TouchableNativeFeedback.Ripple(colors.lightred)}
+            onPress={() => props.enterPress(5)}>
+            <View style={styles.cPad}>
+              <Text style={{fontSize: 40}}>ENTER</Text>
+            </View>
+          </TouchableNativeFeedback>
+        </View>
+        <View style={{height: 20}} />
       </View>
     </View>
   );
 };
 
+const styles = {
+  numberColor: {fontSize: 40, color: colors.white},
+  numberPad: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: colors.deepgray,
+    // backgroundColor: colors.elusiveblue,
+    borderRadius: 10,
+    marginHorizontal: 5,
+    marginVertical: 5,
+  },
+  cPad: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: colors.yellow,
+    borderRadius: 10,
+    marginHorizontal: 5,
+    marginVertical: 5,
+  },
+};
+NumericInput.contextType = AppContext;
 export default NumericInput;

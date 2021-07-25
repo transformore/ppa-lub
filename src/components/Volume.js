@@ -8,6 +8,10 @@ export default class Volume extends Component {
   shouldComponentUpdate(nextProps, nextState) {
     return this.props.val !== nextProps.val;
   }
+  _changeCard = (id) => {
+    let card = 5;
+    this.context.setSelectedCard(card);
+  };
 
   _changeText = (key) => {
     let volume;
@@ -26,9 +30,11 @@ export default class Volume extends Component {
       <NumericInput
         inputVal={this.props.val}
         title={'Volume'}
-        subtitle={'Liter'}
-        color={colors.lightred}
+        // subtitle={'Liter'}
+        subtitle={this.props.uom}
+        color={colors.grey}
         onKeyPress={this._changeText}
+        enterPress={this._changeCard}
       />
     );
   }
