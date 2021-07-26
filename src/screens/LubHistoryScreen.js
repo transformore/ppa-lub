@@ -73,7 +73,10 @@ class LubHistory extends Component {
       this.state.storageOptions[this.state.storageId].name,
     );
     this.hideStorageDialog();
-    this.props.navigation.navigate('Oil & Grease Transaction');
+    // this.props.navigation.navigate('Oil & Grease Transaction');
+    this.props.navigation.navigate('Oil & Grease Transaction', {
+      goLubHistory: () => this.getLub(),
+    });
   };
   getStorage = () => {
     Axios.get(`/oilgreaseForm/${this.context.userData.nrp}`)

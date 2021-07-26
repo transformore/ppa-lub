@@ -18,6 +18,7 @@ import {
   Divider,
   Button,
   DefaultTheme,
+  Caption,
 } from 'react-native-paper';
 import {ScrollView} from 'react-native-gesture-handler';
 import Axios from 'axios';
@@ -29,6 +30,7 @@ import {
   AutoResizeCard,
   Volume,
 } from '../components';
+import {FlatList} from 'react-native-gesture-handler';
 import {colors} from '../styles';
 import {AppContext} from '../context';
 import Modal from 'react-native-modal';
@@ -36,6 +38,7 @@ import {AppExt} from '../utils';
 import ImagePicker from 'react-native-image-crop-picker';
 import FeatherIcons from 'react-native-vector-icons/Feather';
 import RBSheet from 'react-native-raw-bottom-sheet';
+import Icons from 'react-native-vector-icons/MaterialCommunityIcons';
 const {width, height} = Dimensions.get('screen');
 const h_margin = 15;
 
@@ -62,15 +65,51 @@ export class LubScreen extends React.Component {
 
       selectedCard: null,
       volume: null,
+      hm: null,
       uom: null,
+      isHistoryDialogVisible: false,
+      listLub: [],
     };
   }
 
-  goBack = () => {
-    this.props.route.params.goLubHistory();
-    this.props.navigation.goBack();
-  };
+  resetState = () => {
+    this.setState({
+      loading: false,
+      refreshing: false,
+      requestError: false,
+      keyboardState: 'closed',
+      storageId: null,
+      unitId: null,
+      locationId: null,
+      typeId: null,
+      componentId: null,
+      statusId: null,
+      storageOptions: null,
+      unitOptions: null,
+      locationOptions: null,
+      typeOptions: null,
+      componentOptions: null,
+      statusOptions: null,
 
+      selectedCard: null,
+      volume: null,
+      hm: null,
+      uom: null,
+    });
+  };
+  goBack = () => {
+    // this.props.route.params.goLubHistory();
+    // this.props.navigation.goBack();
+    this.resetState();
+    this.getLubHistory();
+    // this.getLubData();
+  };
+  hideHistoryDialog = () => {
+    this.setState({isHistoryDialogVisible: false});
+  };
+  showHistoryDialog = () => {
+    this.setState({isHistoryDialogVisible: true});
+  };
   showSendConfirm = () => {
     Alert.alert(
       'Confirmation',
@@ -93,6 +132,7 @@ export class LubScreen extends React.Component {
 
   componentDidMount() {
     this.getLubData();
+    this.getLubHistory();
   }
   _selectCard = (id) => {
     this.context.setSelectedCard(id);
@@ -160,12 +200,32 @@ export class LubScreen extends React.Component {
         console.warn(e);
       });
   };
+  getLubHistory = () => {
+    this.setState({
+      isLoading: true,
+    });
+    Axios.get(`/oilgreaseHistorical/${this.context.userData.nrp}`)
+      .then((res) => {
+        this.setState({
+          isLoading: false,
+          isRequestError: false,
+          listLub: res.data.data,
+        });
+      })
+      .catch((error) => {
+        alert(error);
+        this.setState({
+          isLoading: false,
+          isRequestError: true,
+        });
+      });
+  };
 
   handleKirim = () => {
     if (
       this.state.volume == null ||
       this.state.hm == null ||
-      this.state.storageId == null ||
+      // this.state.storageId == null ||
       this.state.unitId == null ||
       this.state.locationId == null ||
       this.state.typeId == null ||
@@ -189,7 +249,8 @@ export class LubScreen extends React.Component {
         nrp: this.context.userData.nrp,
         hm: this.state.hm,
         qty: this.state.volume,
-        storage: this.state.storageOptions[this.state.storageId].name,
+        // storage: this.state.storageOptions[this.state.storageId].name,
+        storage: this.context.oilGreaseStorage,
         unit: this.state.unitOptions[this.state.unitId].code,
         loc: this.state.locationOptions[this.state.locationId].code,
         type: this.state.typeOptions[this.state.typeId].code,
@@ -302,7 +363,7 @@ export class LubScreen extends React.Component {
                     </Text>
                   </View>
                 </View>
-                <View style={{height: 20}} />
+                <View style={{height: 10}} />
                 {/* <InputOption
                   label="STORAGE"
                   value={
@@ -480,13 +541,155 @@ export class LubScreen extends React.Component {
               </View>
               {this.state.volume == null ||
               this.state.hm == null ||
-              this.state.storageId == null ||
+              // this.state.storageId == null ||
               this.state.unitId == null ||
               this.state.locationId == null ||
               this.state.typeId == null ||
               this.state.componentId == null ||
               this.state.statusId == null ? (
-                <View style={{height: 0}} />
+                <View
+                  style={{
+                    flex: 1,
+                    marginHorizontal: 15,
+                    borderWidth: 0.5,
+                    marginTop: 10,
+                    borderRadius: 10,
+                    height: 150,
+                  }}>
+                  <Text style={{textAlign: 'center', marginVertical: 10}}>
+                    HISTORY
+                  </Text>
+                  {this.state.isLoading ? (
+                    <LoadingIndicator />
+                  ) : this.state.isRequestError ? (
+                    <ErrorData onRetry={this.getLub} />
+                  ) : !this.state.listLub ? (
+                    <>
+                      {/* <View style={{height: 30}} /> */}
+                      <View
+                        style={{
+                          flex: 1,
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                        }}>
+                        <Icons
+                          style={{margin: 10}}
+                          name="history"
+                          size={75}
+                          color={Colors.grey400}
+                        />
+                        <Caption>No Data</Caption>
+                      </View>
+                    </>
+                  ) : (
+                    <FlatList
+                      data={this.state.listLub}
+                      renderItem={({item}) => {
+                        const monthName = [
+                          '/01',
+                          '/02',
+                          '/03',
+                          '/04',
+                          '/05',
+                          '/06',
+                          '/07',
+                          '/08',
+                          '/09',
+                          '/10',
+                          '/11',
+                          '/12',
+                        ];
+
+                        const date = new Date(item.tanggal);
+                        const formattedDate = `${
+                          date.getDate() < 10 ? '0' : ''
+                        }${date.getDate()}${monthName[date.getMonth()]}`;
+                        return (
+                          <View
+                            style={{
+                              flexDirection: 'row',
+                              backgroundColor:
+                                item.rev_status === '0'
+                                  ? Colors.yellow100
+                                  : item.rev_status === '1'
+                                  ? '#C4E538'
+                                  : item.rev_status === '2'
+                                  ? '#ea8685'
+                                  : Colors.grey100,
+                            }}>
+                            <Text
+                              style={{
+                                fontSize: 12,
+                                paddingLeft: 15,
+                                alignSelf: 'center',
+                                paddingVertical: 5,
+                                color: Colors.grey700,
+                                backgroundColor: 'transparent',
+                                width: 60,
+                              }}>
+                              {formattedDate || '-'}
+                            </Text>
+                            <Text
+                              style={{
+                                fontSize: 12,
+                                paddingHorizontal: 0,
+                                paddingVertical: 5,
+                                alignSelf: 'center',
+                                textAlign: 'left',
+                                color: Colors.blue500,
+                                backgroundColor: 'transparent',
+                                width: 40,
+                              }}>
+                              {item.unit || '-'}
+                            </Text>
+                            <Text
+                              style={{
+                                fontSize: 12,
+                                paddingLeft: 7,
+                                paddingVertical: 5,
+                                alignSelf: 'center',
+                                textAlign: 'right',
+                                color: Colors.grey700,
+                                backgroundColor: 'transparent',
+                                width: 60,
+                              }}>
+                              {item.hm || '-'}
+                            </Text>
+                            <Text
+                              style={{
+                                fontSize: 12,
+                                paddingLeft: 7,
+                                paddingVertical: 5,
+                                alignSelf: 'center',
+                                textAlign: 'right',
+                                color: Colors.orange700,
+                                backgroundColor: 'transparent',
+                                width: 40,
+                              }}>
+                              {parseFloat(item.qty).toFixed(1) || '-'}
+                            </Text>
+                            <Text
+                              style={{
+                                fontSize: 10,
+                                paddingLeft: 10,
+                                paddingVertical: 5,
+                                alignSelf: 'center',
+                                textAlign: 'left',
+                                color: Colors.grey700,
+                                backgroundColor: 'transparent',
+                                flex: 1,
+                              }}>
+                              {item.jenis_oilgrease || '-'}
+                            </Text>
+                          </View>
+                        );
+                      }}
+                      keyExtractor={(item, index) => index.toString()}
+                      ItemSeparatorComponent={Divider}
+                      contentContainerStyle={{padding: 0}}
+                    />
+                  )}
+                </View>
               ) : (
                 <View style={{alignSelf: 'center'}}>
                   <TouchableNativeFeedback
@@ -533,6 +736,38 @@ export class LubScreen extends React.Component {
             <Text style={{marginTop: 15}}>Loading...</Text>
           </View>
         </Modal>
+        <Modal
+          isVisible={this.state.isHistoryDialogVisible}
+          style={{justifyContent: 'center', alignItems: 'center'}}>
+          <View
+            style={{
+              backgroundColor: Colors.white,
+              borderRadius: 10,
+              justifyContent: 'center',
+              alignItems: 'center',
+              padding: 1,
+            }}>
+            <Text>HISTORY</Text>
+            <Button
+              loading={this.state.loading}
+              dark
+              // color={colors.primary}
+              mode="contained"
+              onPress={() => this.hideHistoryDialog()}
+              style={{
+                width: 200,
+                marginHorizontal: 50,
+                marginTop: 20,
+                paddingVertical: 8,
+                fontSize: 25,
+                borderRadius: 28,
+                backgroundColor: '#F79F1F',
+                alignSelf: 'center',
+              }}>
+              CLOSE
+            </Button>
+          </View>
+        </Modal>
       </>
     );
   }
@@ -550,7 +785,7 @@ const styles = {
     borderRadius: width / 16,
     width: width - 2 * h_margin,
     height: 50,
-    marginVertical: 5,
+    marginVertical: 3,
     elevation: 3,
   },
   disableBorder: {
@@ -564,7 +799,7 @@ const styles = {
     borderRadius: width / 16,
     width: width - 2 * h_margin,
     height: 50,
-    marginVertical: 5,
+    marginVertical: 3,
     elevation: 3,
   },
   userTextborder: {
@@ -573,7 +808,7 @@ const styles = {
     flexDirection: 'row',
     // paddingHorizontal: 10,
     width: width - 3 * h_margin,
-    height: 30,
+    height: 25,
     marginLeft: 15,
   },
   userLabel: {width: 90, fontSize: 16},
