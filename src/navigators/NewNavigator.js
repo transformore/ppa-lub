@@ -132,7 +132,7 @@ class NewNavigator extends Component {
               options={{headerShown: false}}
             />
             <Stack.Screen
-              name="Lub"
+              name="Oil & Grease Transaction"
               component={LubScreen}
               options={{headerShown: true}}
             />

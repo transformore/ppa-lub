@@ -265,6 +265,61 @@ export class LubScreen extends React.Component {
                     alignSelf: 'center',
                   }}
                 />
+                <View
+                  style={{
+                    borderWidth: 0.5,
+                    borderRadius: 15,
+                    width: width - 2 * h_margin,
+                    padding: 7,
+                    backgroundcolor: colors.grey,
+                    // elevation: 2,
+                  }}>
+                  <View style={styles.userTextborder}>
+                    <Text style={styles.userLabel}>USER</Text>
+                    <Text style={{width: 10, fontSize: 16, marginRight: 10}}>
+                      :
+                    </Text>
+                    <Text style={styles.userContent}>
+                      {this.context.userData.nama}
+                    </Text>
+                  </View>
+                  <View style={styles.userTextborder}>
+                    <Text style={styles.userLabel}>JABATAN</Text>
+                    <Text style={{width: 10, fontSize: 16, marginRight: 10}}>
+                      :
+                    </Text>
+                    <Text style={styles.userContent}>
+                      {this.context.userData.posisi}
+                    </Text>
+                  </View>
+                  <View style={styles.userTextborder}>
+                    <Text style={styles.userLabel}>STORAGE</Text>
+                    <Text style={{width: 10, fontSize: 18, marginRight: 10}}>
+                      :
+                    </Text>
+                    <Text style={styles.userContent}>
+                      {this.context.oilGreaseStorage}
+                    </Text>
+                  </View>
+                </View>
+                <View style={{height: 20}} />
+                {/* <InputOption
+                  label="STORAGE"
+                  value={
+                    this.state.storageId != null &&
+                    this.state.storageOptions[this.state.storageId].name
+                  }
+                  optionData={this.state.storageOptions}
+                  useIndexReturn={true}
+                  onOptionChoose={(val) => this.setState({storageId: val})}
+                  hasHelper={false}
+                  style={
+                    this.state.storageId == null
+                      ? styles.optiontextborder
+                      : styles.disableBorder
+                  }
+                  isSearchable={true}
+                /> */}
                 <InputOption
                   label="JENIS PELUMAS"
                   value={
@@ -328,23 +383,6 @@ export class LubScreen extends React.Component {
                 ) : (
                   <View style={{height: 0}} />
                 )}
-                <InputOption
-                  label="STORAGE"
-                  value={
-                    this.state.storageId != null &&
-                    this.state.storageOptions[this.state.storageId].name
-                  }
-                  optionData={this.state.storageOptions}
-                  useIndexReturn={true}
-                  onOptionChoose={(val) => this.setState({storageId: val})}
-                  hasHelper={false}
-                  style={
-                    this.state.storageId == null
-                      ? styles.optiontextborder
-                      : styles.disableBorder
-                  }
-                  isSearchable={true}
-                />
                 <InputOption
                   label="LOCATION"
                   value={
@@ -507,7 +545,7 @@ const styles = {
     flexDirection: 'row',
     paddingHorizontal: 15,
     borderColor: '#F79F1F',
-    backgroundColor: '#ffdd59',
+    backgroundColor: '#ffaf40',
     borderWidth: 0.5,
     borderRadius: width / 16,
     width: width - 2 * h_margin,
@@ -529,6 +567,17 @@ const styles = {
     marginVertical: 5,
     elevation: 3,
   },
+  userTextborder: {
+    alignSelf: 'center',
+    alignItems: 'center',
+    flexDirection: 'row',
+    // paddingHorizontal: 10,
+    width: width - 3 * h_margin,
+    height: 30,
+    marginLeft: 15,
+  },
+  userLabel: {width: 90, fontSize: 16},
+  userContent: {width: 200, fontSize: 16, fontWeight: 'bold'},
   lubTypeTextBorder: {
     alignSelf: 'center',
     alignItems: 'center',

@@ -6,10 +6,12 @@ import {
   StyleSheet,
   Alert,
   Dimensions,
+  Linking,
+  TouchableNativeFeedback,
+  Keyboard,
   SafeAreaView,
   ScrollView,
   TextInput,
-  Linking,
 } from 'react-native';
 import {
   Colors,
@@ -42,10 +44,12 @@ class LubHistory extends Component {
     super(props);
 
     this.state = {
+      storageOptions: null, //code_number,type
+      storagId: null, //code_number,type
       listLub: [],
       isLoading: true,
       isRequestError: false,
-      isRevisionModalVisible: false,
+      isStorageDialogVisible: false,
       historyList: [],
       tgl_now: new Date().getTime(),
       tgl_revisi: new Date().getTime() + 1,
@@ -54,8 +58,46 @@ class LubHistory extends Component {
 
   componentDidMount() {
     this.getLub();
+    this.getStorage();
     // alert(this.state.tgl_now);
   }
+  showStorageDialog = () => {
+    this.setState({isStorageDialogVisible: true});
+  };
+  hideStorageDialog = () => {
+    this.setState({isStorageDialogVisible: false});
+  };
+
+  goToTransaction = () => {
+    this.context.setOilGreaseStorage(
+      this.state.storageOptions[this.state.storageId].name,
+    );
+    this.hideStorageDialog();
+    this.props.navigation.navigate('Oil & Grease Transaction');
+  };
+  getStorage = () => {
+    Axios.get(`/oilgreaseForm/${this.context.userData.nrp}`)
+      .then((res) => {
+        const formattedStorage = res.data.storage.map((item, index) => ({
+          id: index,
+          code: item.type,
+          name: item.code_number,
+        }));
+        this.setState({
+          isLoading: false,
+          isRequestError: false,
+          storageOptions: formattedStorage,
+        });
+      })
+      .catch((e) => {
+        this.setState({
+          loading: false,
+          refreshing: false,
+          requestError: true,
+        });
+        console.warn(e);
+      });
+  };
 
   openURL = async (url) => {
     const supported = await Linking.canOpenURL(url);
@@ -320,11 +362,65 @@ class LubHistory extends Component {
           icon="plus"
           size={20}
           onPress={() => {
-            this.props.navigation.navigate('Lub', {
-              goLubHistory: () => this.getLub(),
-            });
+            this.showStorageDialog();
           }}
+          // onPress={() => {
+          //   this.props.navigation.navigate('Oil & Grease Transaction', {
+          //     goLubHistory: () => this.getLub(),
+          //   });
+          // }}
         />
+        <Modal
+          isVisible={this.state.isStorageDialogVisible}
+          onBackButtonPress={this.hideRosterDialog}
+          onBackdropPress={this.hideRosterDialog}
+          animationIn="fadeInUp"
+          animationOut="fadeOutDown">
+          <View style={{backgroundColor: 'grey', flex: 1}}>
+            <InputOption
+              label="STORAGE"
+              value={
+                this.state.storageId != null &&
+                this.state.storageOptions[this.state.storageId].name
+              }
+              optionData={this.state.storageOptions}
+              useIndexReturn={true}
+              onOptionChoose={(val) => this.setState({storageId: val})}
+              hasHelper={false}
+              style={
+                this.state.storageId == null
+                  ? styles.optiontextborder
+                  : styles.disableBorder
+              }
+              isSearchable={true}
+            />
+            <TouchableNativeFeedback
+              delayPressIn={0}
+              background={TouchableNativeFeedback.Ripple(Colors.green200)}
+              onPress={() => {
+                this.state.storageId == null ? null : this.goToTransaction();
+                Keyboard.dismiss();
+              }}>
+              {this.state.storageId == null ? (
+                <View style={{height: 0}} />
+              ) : (
+                <View
+                  style={{
+                    backgroundColor: 'orange',
+                    borderRadius: 25,
+                    height: 50,
+                    width: 150,
+                    marginVertical: 20,
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    alignSelf: 'center',
+                  }}>
+                  <Text>Confirm</Text>
+                </View>
+              )}
+            </TouchableNativeFeedback>
+          </View>
+        </Modal>
       </>
     );
   }

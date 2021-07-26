@@ -64,8 +64,13 @@ export default class AppProvider extends Component {
     lastParkingLocationDialogVisible: false,
     volume: null,
     selectedCard: null,
+    transaction: {
+      oilGreaseStorage: null,
+    },
   };
-
+  setOilGreaseStorage = (storage) => {
+    this.setState({oilGreaseStorage: storage});
+  };
   setSelectedCard = (card) => {
     this.setState({selectedCard: card});
   };
@@ -432,7 +437,8 @@ export default class AppProvider extends Component {
           lastParkingLocationDialogVisible: this.state
             .lastParkingLocationDialogVisible,
           isPublicNetwork: this.state.isPublicNetwork,
-          // setApprovalUpdate: this.setApprovalUpdate,
+          oilGreaseStorage: this.state.oilGreaseStorage,
+          setOilGreaseStorage: this.setOilGreaseStorage,
           setLoggedIn: this.setLoggedIn,
           setScreen: this.setScreen,
           setUserData: this.setUserData,
