@@ -210,24 +210,24 @@ class LubHistory extends Component {
               data={this.state.listLub}
               renderItem={({item}) => {
                 const monthName = [
-                  'Jan',
-                  'Feb',
-                  'Mar',
-                  'Apr',
-                  'May',
-                  'Jun',
-                  'Jul',
-                  'Aug',
-                  'Sep',
-                  'Oct',
-                  'Nov',
-                  'Dec',
+                  '/01',
+                  '/02',
+                  '/03',
+                  '/04',
+                  '/05',
+                  '/06',
+                  '/07',
+                  '/08',
+                  '/09',
+                  '/10',
+                  '/11',
+                  '/12',
                 ];
 
                 const date = new Date(item.tanggal);
                 const formattedDate = `${
                   date.getDate() < 10 ? '0' : ''
-                }${date.getDate()} ${monthName[date.getMonth()]}`;
+                }${date.getDate()}${monthName[date.getMonth()]}`;
                 return (
                   <View
                     style={{
@@ -243,8 +243,8 @@ class LubHistory extends Component {
                     }}>
                     <Text
                       style={{
-                        fontSize: 15,
-                        paddingLeft: 10,
+                        fontSize: 12,
+                        paddingLeft: 15,
                         alignSelf: 'center',
                         paddingVertical: 5,
                         color: Colors.grey700,
@@ -255,46 +255,50 @@ class LubHistory extends Component {
                     </Text>
                     <Text
                       style={{
-                        fontSize: 15,
+                        fontSize: 12,
                         paddingHorizontal: 0,
                         paddingVertical: 5,
                         alignSelf: 'center',
+                        textAlign: 'left',
                         color: Colors.blue500,
                         backgroundColor: 'transparent',
-                        width: 50,
+                        width: 40,
                       }}>
                       {item.unit || '-'}
                     </Text>
                     <Text
                       style={{
-                        fontSize: 15,
-                        paddingHorizontal: 0,
+                        fontSize: 12,
+                        paddingLeft: 7,
                         paddingVertical: 5,
                         alignSelf: 'center',
+                        textAlign: 'right',
                         color: Colors.grey700,
                         backgroundColor: 'transparent',
-                        width: 70,
+                        width: 60,
                       }}>
                       {item.hm || '-'}
                     </Text>
                     <Text
                       style={{
-                        fontSize: 15,
-                        paddingHorizontal: 0,
+                        fontSize: 12,
+                        paddingLeft: 7,
                         paddingVertical: 5,
                         alignSelf: 'center',
+                        textAlign: 'right',
                         color: Colors.orange700,
                         backgroundColor: 'transparent',
-                        width: 50,
+                        width: 40,
                       }}>
-                      {item.qty || '-'}
+                      {parseFloat(item.qty).toFixed(1) || '-'}
                     </Text>
                     <Text
                       style={{
                         fontSize: 10,
-                        paddingHorizontal: 0,
+                        paddingLeft: 10,
                         paddingVertical: 5,
                         alignSelf: 'center',
+                        textAlign: 'left',
                         color: Colors.grey700,
                         backgroundColor: 'transparent',
                         flex: 1,

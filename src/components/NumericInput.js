@@ -3,6 +3,7 @@ import {View, Text, TouchableNativeFeedback} from 'react-native';
 import {Divider, TouchableRipple} from 'react-native-paper';
 import {colors} from '../styles';
 import {AppContext} from '../context';
+import Icon from 'react-native-vector-icons/AntDesign';
 
 const setSelectedCard = () => {
   let card = 5;
@@ -11,13 +12,23 @@ const setSelectedCard = () => {
 const NumericInput = (props) => {
   return (
     <View style={{flex: 1}}>
-      <View style={{flexDirection: 'row'}}>
+      <View
+        style={{
+          flexDirection: 'row',
+          borderWidth: 10,
+          backgroundColor: 'black',
+          borderTopRightRadius: 10,
+          borderTopLeftRadius: 10,
+        }}>
         <View
           style={{
             flex: 1,
             alignItems: 'flex-end',
             paddingVertical: 5,
             paddingHorizontal: 12,
+            backgroundColor: colors.cloud,
+            borderTopLeftRadius: 5,
+            borderBottomLeftRadius: 5,
           }}>
           <Text style={props.inputVal ? {fontSize: 40} : {fontSize: 30}}>
             {props.inputVal ? props.inputVal : props.title}
@@ -26,6 +37,7 @@ const NumericInput = (props) => {
         <View
           style={{
             borderTopRightRadius: 5,
+            borderBottomRightRadius: 5,
             paddingVertical: 15,
             paddingHorizontal: 25,
             backgroundColor: props.color,
@@ -33,9 +45,8 @@ const NumericInput = (props) => {
           <Text style={{fontSize: 25, color: '#fff'}}>{props.subtitle}</Text>
         </View>
       </View>
-      <Divider />
-      <View style={{flex: 1}}>
-        <View style={{height: 20}} />
+      {/* <Divider /> */}
+      <View style={{flex: 1, backgroundColor: 'black', padding: 15}}>
         <View style={{flex: 1, flexDirection: 'row'}}>
           <TouchableNativeFeedback
             delayPressIn={0}
@@ -119,13 +130,8 @@ const NumericInput = (props) => {
             delayPressIn={0}
             background={TouchableNativeFeedback.Ripple(colors.deeppurple)}
             onPress={() => props.onKeyPress('.')}>
-            <View
-              style={{
-                flex: 1,
-                justifyContent: 'center',
-                alignItems: 'center',
-              }}>
-              <Text style={{fontSize: 40}}>.</Text>
+            <View style={styles.numberPad}>
+              <Text style={{fontSize: 40, color: colors.white}}> . </Text>
             </View>
           </TouchableNativeFeedback>
           <TouchableNativeFeedback
@@ -141,21 +147,39 @@ const NumericInput = (props) => {
             background={TouchableNativeFeedback.Ripple(colors.lightred)}
             onPress={() => props.onKeyPress('C')}>
             <View style={styles.cPad}>
-              <Text style={{fontSize: 40}}>C</Text>
+              <Text style={{fontSize: 40, color: colors.white}}>C</Text>
             </View>
           </TouchableNativeFeedback>
         </View>
-        <View style={styles.cPad}>
+        <View
+          style={{
+            justifyContent: 'center',
+            alignItems: 'center',
+            flexDirection: 'row',
+          }}>
+          <TouchableNativeFeedback
+            delayPressIn={0}
+            background={TouchableNativeFeedback.Ripple(colors.deeppurple)}
+            onPress={() => props.onKeyPress('00')}>
+            <View style={styles.numberPad}>
+              <Text style={{fontSize: 40, color: colors.white}}>00</Text>
+            </View>
+          </TouchableNativeFeedback>
           <TouchableNativeFeedback
             delayPressIn={0}
             background={TouchableNativeFeedback.Ripple(colors.lightred)}
             onPress={() => props.enterPress(5)}>
             <View style={styles.cPad}>
-              <Text style={{fontSize: 40}}>ENTER</Text>
+              {/* <Text style={{fontSize: 40}}>ENTER</Text> */}
+              <Icon
+                style={{margin: 10}}
+                name="enter"
+                size={50}
+                color={colors.white}
+              />
             </View>
           </TouchableNativeFeedback>
         </View>
-        <View style={{height: 20}} />
       </View>
     </View>
   );
@@ -164,7 +188,8 @@ const NumericInput = (props) => {
 const styles = {
   numberColor: {fontSize: 40, color: colors.white},
   numberPad: {
-    flex: 1,
+    width: 98,
+    height: 55,
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: colors.deepgray,
@@ -175,6 +200,7 @@ const styles = {
   },
   cPad: {
     flex: 1,
+    height: 55,
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: colors.yellow,

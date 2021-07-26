@@ -241,10 +241,10 @@ export class LubScreen extends React.Component {
           translucent={false}
         />
 
-        <Appbar.Header style={{zIndex: 3}}>
+        {/* <Appbar.Header style={{zIndex: 3}}>
           <Appbar.BackAction onPress={this.goBack} />
           <Appbar.Content title="Grease Oil Transaction" />
-        </Appbar.Header>
+        </Appbar.Header> */}
 
         <View style={{flex: 1, backgroundColor: 'transparent'}}>
           {this.state.loading ? (

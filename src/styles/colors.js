@@ -17,6 +17,7 @@ const colors = {
   lightgreen: '#AFD57F',
   white: '#fff',
   lighGrey: '#f5f5f5',
+  cloud: '#ecf0f1',
   silverGrey: '#ecf0f1',
   grey: '#bdbdbd',
 };
