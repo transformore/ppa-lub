@@ -128,7 +128,7 @@ const styles = {
     flexDirection: 'row',
     paddingHorizontal: 15,
     borderColor: colors.grey,
-    // backgroundColor: colors.elusiveblue,
+    backgroundColor: 'transparent',
     borderWidth: 0.5,
     borderRadius: width / 16,
     width: width - 2 * h_margin,

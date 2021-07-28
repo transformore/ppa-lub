@@ -358,11 +358,11 @@ export class LubScreen extends React.Component {
                       width: width - 2 * h_margin,
                       alignItems: 'center',
                       alignSelf: 'center',
-                      marginBottom: 25,
+                      // marginBottom: 25,
                     }}>
                     <View>
                       <Text style={styles.screenHeader}>
-                        OIl GREASE TRANSACTION
+                        OIl & GREASE TRANSACTION
                       </Text>
                     </View>
                     <View style={styles.userTextborder}>
@@ -375,21 +375,22 @@ export class LubScreen extends React.Component {
                         {this.context.userData.posisi}
                       </Text>
                     </View>
+                    <View style={{height: 10}} />
                     <View style={styles.userTextborder}>
                       <Text style={styles.storageContent}>
                         {this.context.oilGreaseStorage}
                       </Text>
                     </View>
                   </View>
-                  <View style={{height: 10}} />
+                  <View style={{height: 0}} />
                   <View
                     style={{
                       flexDirection: 'row',
-                      flex: 1,
+                      // flex: 1,
                       alignItems: 'center',
                       alignSelf: 'center',
-                      justifyContent: 'space-between',
-                      width: width - 2 * h_margin,
+                      justifyContent: 'center',
+                      width: width - 2.1 * h_margin,
                     }}>
                     <InputOption
                       label="UNIT C/N  >>"
@@ -531,10 +532,11 @@ export class LubScreen extends React.Component {
                   <View
                     style={{
                       flexDirection: 'row',
-                      flex: 1,
+                      // flex: 1,
                       alignItems: 'center',
                       alignSelf: 'center',
-                      width: width - 2 * h_margin,
+                      justifyContent: 'space-between',
+                      width: width - 1.7 * h_margin,
                     }}>
                     <InputOption
                       label="KOMPONEN"
@@ -616,9 +618,9 @@ export class LubScreen extends React.Component {
                       flex: 1,
                       marginHorizontal: 15,
                       borderWidth: 0.8,
-                      borderColor: colors.grey,
+                      borderColor: colors.opaWhite,
                       marginTop: 15,
-                      borderRadius: 10,
+                      borderRadius: 7,
                       width: width - 2 * h_margin,
                       alignSelf: 'center',
                       justifyContent: 'center',
@@ -638,7 +640,7 @@ export class LubScreen extends React.Component {
                           height: 25,
                           color: 'white',
                         }}>
-                        HISTORY
+                        LUBRICATING HISTORY
                       </Text>
                     </View>
                     <View
@@ -789,7 +791,7 @@ export class LubScreen extends React.Component {
                                   paddingVertical: 5,
                                   alignSelf: 'center',
                                   textAlign: 'right',
-                                  color: colors.red,
+                                  color: colors.hijaudaun,
                                   width: 40,
                                 }}>
                                 {parseFloat(item.qty).toFixed(1) || '-'}
@@ -900,7 +902,7 @@ const styles = {
     flexDirection: 'column',
     paddingHorizontal: 15,
     paddingTop: 5,
-    borderColor: colors.silverGrey,
+    borderColor: colors.opaWhite,
     // backgroundColor: colors.elusiveblue,
     borderWidth: 0.5,
     borderRadius: width / 16,
@@ -916,8 +918,7 @@ const styles = {
     flexDirection: 'column',
     paddingHorizontal: 10,
     paddingTop: 5,
-    borderColor: colors.grey,
-    // backgroundColor: colors.elusiveblue,
+    borderColor: colors.opaWhite,
     borderWidth: 0.5,
     borderRadius: width / 16,
     width: 150,
@@ -934,7 +935,7 @@ const styles = {
     backgroundColor: colors.opaWhite,
     borderWidth: 3,
     borderRadius: width / 16,
-    width: 215,
+    width: 210,
     height: 50,
     marginVertical: 5,
     elevation: 3,
@@ -946,11 +947,10 @@ const styles = {
     flexDirection: 'column',
     paddingHorizontal: 25,
     paddingTop: 5,
-    borderColor: colors.grey,
-    // backgroundColor: colors.disableWhite,
+    borderColor: colors.opaWhite,
     borderWidth: 0.5,
     borderRadius: width / 16,
-    width: 215,
+    width: 212,
     height: 50,
     marginVertical: 5,
     elevation: 3,
@@ -985,17 +985,19 @@ const styles = {
   },
   screenHeader: {
     width: width - 2 * h_margin,
-    fontSize: 25,
+    fontSize: 20,
     color: colors.blue,
     textAlign: 'center',
+    height: 22,
     marginBottom: 20,
   },
   storageContent: {
     width: width - 2 * h_margin,
-    fontSize: 22,
+    fontSize: 20,
     fontWeight: 'bold',
     color: colors.ss6orange,
     textAlign: 'center',
+    alignSelf: 'flex-end',
   },
   lubDisableBorder: {
     alignSelf: 'flex-start',
@@ -1003,8 +1005,7 @@ const styles = {
     justifyContent: 'flex-start',
     flexDirection: 'column',
     paddingTop: 5,
-    borderColor: colors.silverGrey,
-    // backgroundColor: colors.elusiveblue,
+    borderColor: colors.opaWhite,
     borderWidth: 0,
     borderRadius: width / 16,
     width: width - 2 * h_margin,
