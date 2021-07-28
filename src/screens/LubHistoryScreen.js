@@ -382,17 +382,17 @@ class LubHistory extends Component {
           animationOut="fadeOutDown">
           <View
             style={{
-              backgroundColor: 'transparent',
-              marginTop: -10,
-              flexDirection: 'column',
-              height: 120,
-              width: 200,
+              height: 200,
+              backgroundColor: 'white',
+              paddingVertical: 20,
+              paddingHorizontal: 20,
               alignSelf: 'center',
               alignItems: 'center',
               justifyContent: 'center',
             }}>
+            <Text style={{marginVertical: 10}}>Pilih Storage</Text>
             <InputOption
-              label="STORAGE >>"
+              label="STORAGE"
               value={
                 this.state.storageId != null &&
                 this.state.storageOptions[this.state.storageId].name
@@ -457,24 +457,24 @@ const styles = StyleSheet.create({
     backgroundColor: '#ffaf40',
     borderWidth: 0.5,
     borderRadius: width / 16,
-    width: 250,
+    width: 150,
     height: 50,
     marginVertical: 20,
     elevation: 3,
   },
   disableBorder: {
     alignSelf: 'center',
-    alignItems: 'center',
-    // flexDirection: 'row',
-    justifyContent: 'center',
+    alignItems: 'flex-start',
+    flexDirection: 'column',
     paddingHorizontal: 15,
+    paddingTop: 5,
     borderColor: colors.silverGrey,
-    backgroundColor: colors.silverGrey,
+    backgroundColor: colors.elusiveblue,
     borderWidth: 0.5,
     borderRadius: width / 16,
-    width: 250,
-    height: 50,
-    marginVertical: 20,
+    width: width / 2,
+    height: 55,
+    marginVertical: 5,
     elevation: 3,
   },
 });

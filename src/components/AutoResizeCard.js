@@ -27,10 +27,18 @@ const AutoResizeCard = (props) => {
             <View style={styles.optionTextBorder}>
               <View
                 style={{
-                  flexDirection: 'row',
-                  alignItems: 'center',
-                  justifyContent: 'flex-start',
-                  flex: 1,
+                  alignSelf: 'center',
+                  alignItems: 'flex-start',
+                  flexDirection: 'column',
+                  paddingHorizontal: 15,
+                  paddingTop: 5,
+                  borderColor: colors.silverGrey,
+                  borderWidth: 0.5,
+                  borderRadius: width / 16,
+                  width: width - 2 * h_margin,
+                  height: 50,
+                  marginVertical: 5,
+                  elevation: 3,
                 }}>
                 <Text style={styles.labelInactive}>QUANTITY </Text>
                 <Text
@@ -68,6 +76,7 @@ const AutoResizeCard = (props) => {
                     textAlign: 'left',
                     fontSize: 25,
                     marginRight: 15,
+                    color: 'white',
                   }}>
                   {props.idleVal} {props.idleTitle}
                 </Text>
@@ -101,11 +110,11 @@ const styles = {
   optionTextBorder: {
     alignSelf: 'center',
     alignItems: 'center',
-    justifyContent: 'flex-end',
+    justifyContent: 'center',
     flexDirection: 'row',
     paddingHorizontal: 15,
-    borderColor: '#F79F1F',
-    backgroundColor: '#ffdd59',
+    borderColor: colors.silverGrey,
+    // backgroundColor: '#ffdd59',
     borderWidth: 0.5,
     borderRadius: width / 16,
     width: width - 2 * h_margin,
@@ -119,7 +128,7 @@ const styles = {
     flexDirection: 'row',
     paddingHorizontal: 15,
     borderColor: colors.grey,
-    backgroundColor: colors.elusiveblue,
+    // backgroundColor: colors.elusiveblue,
     borderWidth: 0.5,
     borderRadius: width / 16,
     width: width - 2 * h_margin,
@@ -128,7 +137,8 @@ const styles = {
     elevation: 3,
   },
   labelInactive: {
-    color: DefaultTheme.colors.placeholder,
+    // color: DefaultTheme.colors.placeholder,
+    color: 'white',
     fontSize: 16,
     marginHorizontal: 5,
     width: 115,
@@ -136,7 +146,8 @@ const styles = {
     marginLeft: 15,
   },
   labelActive: {
-    color: DefaultTheme.colors.placeholder,
+    // color: DefaultTheme.colors.placeholder,
+    color: 'white',
     fontSize: 10,
     marginLeft: 15,
     width: 65,

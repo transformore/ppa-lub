@@ -98,12 +98,16 @@ export class LubScreen extends React.Component {
       uom: null,
     });
   };
+  setUnit = (unit) => {
+    this.setState({unitId: unit});
+    this.setState({hm: null});
+  };
   goBack = () => {
     // this.props.route.params.goLubHistory();
     // this.props.navigation.goBack();
     this.resetState();
     this.getLubHistory();
-    // this.getLubData();
+    this.getLubData();
   };
   hideHistoryDialog = () => {
     this.setState({isHistoryDialogVisible: false});
@@ -396,7 +400,7 @@ export class LubScreen extends React.Component {
                       }
                       optionData={this.state.unitOptions}
                       useIndexReturn={true}
-                      onOptionChoose={(val) => this.setState({unitId: val})}
+                      onOptionChoose={(val) => this.setUnit(val)}
                       hasHelper={false}
                       style={
                         this.state.unitId == null
@@ -421,7 +425,7 @@ export class LubScreen extends React.Component {
                           disabled={this.state.hm == null}
                           mode="cotained"
                           style={{
-                            color: colors.darkBlue,
+                            color: colors.white,
                             fontSize: 18,
                             fontWeight: 'bold',
                           }}
@@ -819,17 +823,17 @@ export class LubScreen extends React.Component {
                   onPress={() => {
                     this.props.navigation.navigate('LubHistory');
                   }}>
-                  <View>
-                    <Text
-                      style={{
-                        textAlign: 'center',
-                        fontSize: 18,
-                        marginTop: 15,
-                        color: colors.blue,
-                      }}>
-                      Back
-                    </Text>
-                  </View>
+                  {/* <View> */}
+                  <Text
+                    style={{
+                      textAlign: 'center',
+                      fontSize: 18,
+                      marginTop: 15,
+                      color: colors.blue,
+                    }}>
+                    Back
+                  </Text>
+                  {/* </View> */}
                 </TouchableOpacity>
                 <Divider style={{height: 1.5}} />
               </ScrollView>
@@ -864,7 +868,8 @@ const styles = {
   optiontextborder: {
     alignSelf: 'center',
     alignItems: 'center',
-    flexDirection: 'row',
+    justifyContent: 'center',
+    // flexDirection: 'row',
     paddingHorizontal: 15,
     borderColor: colors.opaWhite,
     backgroundColor: colors.opaWhite,
@@ -890,13 +895,13 @@ const styles = {
     elevation: 3,
   },
   disableBorder: {
-    alignSelf: 'flex-start',
+    alignSelf: 'center',
     alignItems: 'flex-start',
     flexDirection: 'column',
     paddingHorizontal: 15,
     paddingTop: 5,
     borderColor: colors.silverGrey,
-    backgroundColor: colors.elusiveblue,
+    // backgroundColor: colors.elusiveblue,
     borderWidth: 0.5,
     borderRadius: width / 16,
     width: width - 2 * h_margin,
@@ -912,7 +917,7 @@ const styles = {
     paddingHorizontal: 10,
     paddingTop: 5,
     borderColor: colors.grey,
-    backgroundColor: colors.elusiveblue,
+    // backgroundColor: colors.elusiveblue,
     borderWidth: 0.5,
     borderRadius: width / 16,
     width: 150,
@@ -942,7 +947,7 @@ const styles = {
     paddingHorizontal: 25,
     paddingTop: 5,
     borderColor: colors.grey,
-    backgroundColor: colors.disableWhite,
+    // backgroundColor: colors.disableWhite,
     borderWidth: 0.5,
     borderRadius: width / 16,
     width: 215,
@@ -960,15 +965,22 @@ const styles = {
   userLabel: {width: 90, fontSize: 18},
   userContent: {
     width: width - 2 * h_margin,
-    fontSize: 25,
+    fontSize: 20,
+    fontWeight: 'bold',
+    color: 'white',
+    textAlign: 'center',
+  },
+  unitContent: {
+    width: width - 2 * h_margin,
+    fontSize: 16,
     fontWeight: 'bold',
     color: 'white',
     textAlign: 'center',
   },
   jabatanContent: {
     width: width - 2 * h_margin,
-    fontSize: 16,
-    color: colors.blue,
+    fontSize: 12,
+    color: colors.yellow,
     textAlign: 'center',
   },
   screenHeader: {
@@ -980,7 +992,7 @@ const styles = {
   },
   storageContent: {
     width: width - 2 * h_margin,
-    fontSize: 25,
+    fontSize: 22,
     fontWeight: 'bold',
     color: colors.ss6orange,
     textAlign: 'center',
@@ -992,7 +1004,7 @@ const styles = {
     flexDirection: 'column',
     paddingTop: 5,
     borderColor: colors.silverGrey,
-    backgroundColor: colors.elusiveblue,
+    // backgroundColor: colors.elusiveblue,
     borderWidth: 0,
     borderRadius: width / 16,
     width: width - 2 * h_margin,
@@ -1016,7 +1028,8 @@ const styles = {
     width: 65,
   },
   hmLabelActive: {
-    color: DefaultTheme.colors.placeholder,
+    // color: DefaultTheme.colors.placeholder,
+    color: colors.white,
     fontSize: 10,
     marginLeft: 0,
     width: 20,

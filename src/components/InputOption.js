@@ -292,7 +292,8 @@ const styles = StyleSheet.create({
     color: 'white',
   },
   labelActive: {
-    color: Colors.grey800,
+    // color: Colors.grey800,
+    color: 'white',
     fontSize: 8,
     marginHorizontal: 5,
     width: 80,
@@ -305,7 +306,8 @@ const styles = StyleSheet.create({
     width: 162,
   },
   nilaiActive: {
-    color: DefaultTheme.colors.placeholder,
+    // color: DefaultTheme.colors.placeholder,
+    color: 'white',
     fontSize: 16,
     marginHorizontal: 5,
     marginTop: 5,
