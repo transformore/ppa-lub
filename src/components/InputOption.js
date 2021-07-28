@@ -117,7 +117,7 @@ export class InputOption extends Component {
       : false;
 
     return (
-      <View>
+      <View style={{flex: 1}}>
         <TouchableOpacity
           style={{
             ...styles.pressContainer,
@@ -127,21 +127,26 @@ export class InputOption extends Component {
           <Text style={value ? styles.labelActive : styles.labelInactive}>
             {label}
           </Text>
-          <Text style={{marginHorizontal: 10}}>:</Text>
-          <Text style={value ? styles.nilaiActive : styles.nilai}>
-            {value ? `${value}` : '.....'}
-          </Text>
+          <View style={{flexDirection: 'row', flex: 1}}>
+            {/* <Text style={{marginHorizontal: 10}}>:</Text> */}
+            <View style={{flexDirection: 'row'}}>
+              <Text style={value ? styles.nilaiActive : styles.nilai}>
+                {/* {value ? `${value}` : '.....'} */}
+                {value ? `${value}` : ''}
+              </Text>
+            </View>
 
-          {isLoading ? (
-            <ActivityIndicator size="small" style={styles.icon} />
-          ) : (
-            <MCIcons
-              name="menu-down"
-              size={25}
-              color={DefaultTheme.colors.text}
-              style={styles.icon}
-            />
-          )}
+            {isLoading ? (
+              <ActivityIndicator size="small" style={styles.icon} />
+            ) : (
+              <MCIcons
+                name="menu-down"
+                size={25}
+                color={DefaultTheme.colors.text}
+                style={styles.icon}
+              />
+            )}
+          </View>
         </TouchableOpacity>
         {hasHelper && (
           <HelperText
@@ -241,7 +246,9 @@ export class InputOption extends Component {
                             />
                           ) : null
                         }
-                        // right={props => <List.Icon {...props} icon="chevron-right" />}
+                        right={(props) => (
+                          <List.Icon {...props} icon="chevron-right" />
+                        )}
                       />
                     )}
                     ListHeaderComponent={
@@ -278,16 +285,18 @@ const styles = StyleSheet.create({
     paddingLeft: 25,
   },
   labelInactive: {
-    color: DefaultTheme.colors.placeholder,
+    // color: DefaultTheme.colors.placeholder,
     fontSize: 16,
     marginHorizontal: 5,
     width: 121,
+    color: 'white',
   },
   labelActive: {
     color: Colors.grey800,
-    fontSize: 10,
+    fontSize: 8,
     marginHorizontal: 5,
-    width: 58,
+    width: 80,
+    // marginVertical: -20,
   },
   nilai: {
     color: DefaultTheme.colors.placeholder,
@@ -299,7 +308,8 @@ const styles = StyleSheet.create({
     color: DefaultTheme.colors.placeholder,
     fontSize: 16,
     marginHorizontal: 5,
-    width: 180,
+    marginTop: 5,
+    width: 300,
     fontWeight: 'bold',
   },
   icon: {marginRight: 6.5},
@@ -309,9 +319,11 @@ const styles = StyleSheet.create({
     textAlign: 'right',
   },
   optionModalCard: {
+    marginTop: 60,
     borderRadius: 10,
     backgroundColor: Colors.white,
     elevation: 5,
+    height: 200,
   },
   optionModalCardSearchable: {
     flex: 1,

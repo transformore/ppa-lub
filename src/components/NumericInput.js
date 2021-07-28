@@ -47,7 +47,7 @@ const NumericInput = (props) => {
       </View>
       {/* <Divider /> */}
       <View style={{flex: 1, backgroundColor: 'black', padding: 15}}>
-        <View style={{flex: 1, flexDirection: 'row'}}>
+        <View style={{flex: 1, flexDirection: 'row', justifyContent: 'center'}}>
           <TouchableNativeFeedback
             delayPressIn={0}
             background={TouchableNativeFeedback.Ripple(colors.deeppurple)}
@@ -73,7 +73,7 @@ const NumericInput = (props) => {
             </View>
           </TouchableNativeFeedback>
         </View>
-        <View style={{flex: 1, flexDirection: 'row'}}>
+        <View style={{flex: 1, flexDirection: 'row', justifyContent: 'center'}}>
           <TouchableNativeFeedback
             delayPressIn={0}
             background={TouchableNativeFeedback.Ripple(colors.deeppurple)}
@@ -99,7 +99,7 @@ const NumericInput = (props) => {
             </View>
           </TouchableNativeFeedback>
         </View>
-        <View style={{flex: 1, flexDirection: 'row'}}>
+        <View style={{flex: 1, flexDirection: 'row', justifyContent: 'center'}}>
           <TouchableNativeFeedback
             delayPressIn={0}
             background={TouchableNativeFeedback.Ripple(colors.deeppurple)}
@@ -125,7 +125,7 @@ const NumericInput = (props) => {
             </View>
           </TouchableNativeFeedback>
         </View>
-        <View style={{flex: 1, flexDirection: 'row'}}>
+        <View style={{flex: 1, flexDirection: 'row', justifyContent: 'center'}}>
           <TouchableNativeFeedback
             delayPressIn={0}
             background={TouchableNativeFeedback.Ripple(colors.deeppurple)}
@@ -153,9 +153,10 @@ const NumericInput = (props) => {
         </View>
         <View
           style={{
-            justifyContent: 'center',
-            alignItems: 'center',
+            flex: 1,
             flexDirection: 'row',
+            justifyContent: 'center',
+            marginHorizontal: 10,
           }}>
           <TouchableNativeFeedback
             delayPressIn={0}
@@ -169,12 +170,12 @@ const NumericInput = (props) => {
             delayPressIn={0}
             background={TouchableNativeFeedback.Ripple(colors.lightred)}
             onPress={() => props.enterPress(5)}>
-            <View style={styles.cPad}>
+            <View style={styles.enterPad}>
               {/* <Text style={{fontSize: 40}}>ENTER</Text> */}
               <Icon
                 style={{margin: 10}}
                 name="enter"
-                size={50}
+                size={35}
                 color={colors.white}
               />
             </View>
@@ -188,7 +189,7 @@ const NumericInput = (props) => {
 const styles = {
   numberColor: {fontSize: 40, color: colors.white},
   numberPad: {
-    width: 98,
+    width: 100,
     height: 55,
     justifyContent: 'center',
     alignItems: 'center',
@@ -199,11 +200,21 @@ const styles = {
     marginVertical: 5,
   },
   cPad: {
+    width: 100,
+    height: 55,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: colors.ss6orange,
+    borderRadius: 10,
+    marginHorizontal: 5,
+    marginVertical: 5,
+  },
+  enterPad: {
     flex: 1,
     height: 55,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: colors.yellow,
+    backgroundColor: colors.ss6orange,
     borderRadius: 10,
     marginHorizontal: 5,
     marginVertical: 5,

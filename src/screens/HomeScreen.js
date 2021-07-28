@@ -456,33 +456,49 @@ class HomeScreen extends Component {
         isOprOnly: false,
       },
       {
-        label: 'Oil & Grease',
-        onPress: () => this.props.navigation.navigate('LubHistory'),
-        image: require('../assets/image/menu/hourmeter3D.png'),
+        label:
+          this.context.userData.sub_empl == 6
+            ? // &&this.context.oprData.isCheckedIn == 1
+              'Oil & Grease '
+            : '',
+        onPress:
+          this.context.userData.sub_empl == 6
+            ? () => this.props.navigation.navigate('LubHistory')
+            : null,
+        image:
+          this.context.userData.sub_empl == 6
+            ? require('../assets/image/menu/hourmeter3D.png')
+            : '',
         isOprOnly: false,
       },
-      {
-        label:
-          this.context.status.isCheckedIn && !this.context.status.isNonOpr
-            ? this.context.status.hmStart == null
-              ? 'Mulai Operasi'
-              : this.context.status.hmStop == null &&
-                this.context.status.hmStart != null
-              ? 'Stop Operasi'
-              : 'Mulai Operasi'
-            : 'Mulai Operasi',
-        onPress: () =>
-          this.context.status.isCheckedIn && !this.context.status.isNonOpr
-            ? this.context.status.hmStart == null
-              ? this.showHmStartDialog()
-              : this.context.status.hmStop == null &&
-                this.context.status.hmStart != null
-              ? this.showHmStopDialog()
-              : alert('isi parking location terlebih dahulu')
-            : alert('check in terlebih dahulu'),
-        image: require('../assets/image/menu/stop3D.png'),
-        isOprOnly: true,
-      },
+      // {
+      //   label:
+      //     this.context.oprData.has_simper == 1 &&
+      //     this.context.oprData.isCheckedIn == 1
+      //       ? this.context.oprData.isOperatingUnit == 1
+      //         ? 'Selesai Operasi '
+      //         : 'Mulai Operasi'
+      //       : '',
+
+      //   onPress: () =>
+      //     this.context.oprData.has_simper == 1 &&
+      //     this.context.oprData.isCheckedIn == 1
+      //       ? this.context.oprData.isOperatingUnit == 1
+      //         ? this.props.navigation.navigate('StopOpr', {
+      //             goHome: () => this.context.getOprData(),
+      //           })
+      //         : this.props.navigation.navigate('StartOpr')
+      //       : '',
+
+      //   image:
+      //     this.context.oprData.has_simper == 1 &&
+      //     this.context.oprData.isCheckedIn == 1
+      //       ? this.context.oprData.isOperatingUnit == 1
+      //         ? require('../assets/image/menu/stop3D.png')
+      //         : require('../assets/image/menu/stop3D.png')
+      //       : '',
+      //   isOprOnly: false,
+      // },
     ];
     const essData = [
       {

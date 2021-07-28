@@ -33,6 +33,7 @@ import {AppContext} from '../context';
 import {site} from '../constants';
 import Modal from 'react-native-modal';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
+import {colors} from '../styles';
 // import DateTimePicker from '@react-native-community/datetimepicker';
 // import {FormatingDate} from '../utils';
 // import DatePicker from 'react-native-datepicker';
@@ -379,9 +380,19 @@ class LubHistory extends Component {
           onBackdropPress={this.hideRosterDialog}
           animationIn="fadeInUp"
           animationOut="fadeOutDown">
-          <View style={{backgroundColor: 'grey', flex: 1}}>
+          <View
+            style={{
+              backgroundColor: 'transparent',
+              marginTop: -10,
+              flexDirection: 'column',
+              height: 120,
+              width: 200,
+              alignSelf: 'center',
+              alignItems: 'center',
+              justifyContent: 'center',
+            }}>
             <InputOption
-              label="STORAGE"
+              label="STORAGE >>"
               value={
                 this.state.storageId != null &&
                 this.state.storageOptions[this.state.storageId].name
@@ -413,12 +424,12 @@ class LubHistory extends Component {
                     borderRadius: 25,
                     height: 50,
                     width: 150,
-                    marginVertical: 20,
+                    marginTop: 20,
                     alignItems: 'center',
                     justifyContent: 'center',
                     alignSelf: 'center',
                   }}>
-                  <Text>Confirm</Text>
+                  <Text style={{fontSize: 18, color: 'white'}}>Confirm</Text>
                 </View>
               )}
             </TouchableNativeFeedback>
@@ -435,6 +446,36 @@ const styles = StyleSheet.create({
     margin: 20,
     right: 15,
     bottom: 10,
+  },
+  optiontextborder: {
+    alignSelf: 'center',
+    alignItems: 'center',
+    justifyContent: 'center',
+    // flexDirection: 'row',
+    paddingHorizontal: 15,
+    borderColor: '#F79F1F',
+    backgroundColor: '#ffaf40',
+    borderWidth: 0.5,
+    borderRadius: width / 16,
+    width: 250,
+    height: 50,
+    marginVertical: 20,
+    elevation: 3,
+  },
+  disableBorder: {
+    alignSelf: 'center',
+    alignItems: 'center',
+    // flexDirection: 'row',
+    justifyContent: 'center',
+    paddingHorizontal: 15,
+    borderColor: colors.silverGrey,
+    backgroundColor: colors.silverGrey,
+    borderWidth: 0.5,
+    borderRadius: width / 16,
+    width: 250,
+    height: 50,
+    marginVertical: 20,
+    elevation: 3,
   },
 });
 
