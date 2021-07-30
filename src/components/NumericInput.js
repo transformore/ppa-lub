@@ -46,8 +46,20 @@ const NumericInput = (props) => {
         </View>
       </View>
       {/* <Divider /> */}
-      <View style={{flex: 1, backgroundColor: 'black', padding: 15}}>
-        <View style={{flex: 1, flexDirection: 'row', justifyContent: 'center'}}>
+      <View
+        style={{
+          backgroundColor: 'black',
+          padding: 15,
+          borderBottomLeftRadius: 10,
+          borderBottomRightRadius: 10,
+        }}>
+        <View
+          style={{
+            // flex: 1,
+            flexDirection: 'row',
+            justifyContent: 'center',
+            height: 70,
+          }}>
           <TouchableNativeFeedback
             delayPressIn={0}
             background={TouchableNativeFeedback.Ripple(colors.deeppurple)}
@@ -73,7 +85,13 @@ const NumericInput = (props) => {
             </View>
           </TouchableNativeFeedback>
         </View>
-        <View style={{flex: 1, flexDirection: 'row', justifyContent: 'center'}}>
+        <View
+          style={{
+            // flex: 1,
+            flexDirection: 'row',
+            justifyContent: 'center',
+            height: 70,
+          }}>
           <TouchableNativeFeedback
             delayPressIn={0}
             background={TouchableNativeFeedback.Ripple(colors.deeppurple)}
@@ -99,7 +117,13 @@ const NumericInput = (props) => {
             </View>
           </TouchableNativeFeedback>
         </View>
-        <View style={{flex: 1, flexDirection: 'row', justifyContent: 'center'}}>
+        <View
+          style={{
+            // flex: 1,
+            flexDirection: 'row',
+            justifyContent: 'center',
+            height: 70,
+          }}>
           <TouchableNativeFeedback
             delayPressIn={0}
             background={TouchableNativeFeedback.Ripple(colors.deeppurple)}
@@ -125,7 +149,13 @@ const NumericInput = (props) => {
             </View>
           </TouchableNativeFeedback>
         </View>
-        <View style={{flex: 1, flexDirection: 'row', justifyContent: 'center'}}>
+        <View
+          style={{
+            // flex: 1,
+            flexDirection: 'row',
+            justifyContent: 'center',
+            height: 70,
+          }}>
           <TouchableNativeFeedback
             delayPressIn={0}
             background={TouchableNativeFeedback.Ripple(colors.deeppurple)}

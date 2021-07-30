@@ -17,6 +17,8 @@ import CustomIcon from './CustomIcon';
 import AutoResizeCard from './AutoResizeCard';
 import NumericInput from './NumericInput';
 import Volume from './Volume';
+import Bounce from './Bounce';
+import FillForm from './FillForm';
 export {
   ImageMenuItem,
   HomeCarousel,
@@ -37,4 +39,6 @@ export {
   AutoResizeCard,
   NumericInput,
   Volume,
+  Bounce,
+  FillForm,
 };

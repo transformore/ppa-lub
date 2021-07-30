@@ -17,13 +17,15 @@ import RBSheet from 'react-native-raw-bottom-sheet';
 import Axios from 'axios';
 import {AppContext} from '../context';
 import Modal from 'react-native-modal';
-import {LoadingIndicator, ErrorData, InputOption} from '../components';
+import {LoadingIndicator, ErrorData, FillForm} from '../components';
+import {colors} from '../styles';
 import Icons from 'react-native-vector-icons/MaterialCommunityIcons';
 import ImagePicker from 'react-native-image-crop-picker';
 import FeatherIcons from 'react-native-vector-icons/Feather';
 
 const {width, height} = Dimensions.get('screen');
 const h_margin = 20;
+const spacer = 5;
 
 export class FitToWorkScreen extends Component {
   constructor(props) {
@@ -264,7 +266,7 @@ export class FitToWorkScreen extends Component {
             <ErrorData onRetry={this.getHazardData} />
           ) : (
             <>
-              <ScrollView style={{flex: 1, backgroundColor: Colors.grey100}}>
+              <ScrollView style={{flex: 1, backgroundColor: colors.safeArea}}>
                 <View
                   style={{
                     marginHorizontal: 0,
@@ -485,27 +487,34 @@ export class FitToWorkScreen extends Component {
                     </View>
                     <View style={{height: 30}} />
                   </View>
-                  <View style={styles.textinput}>
-                    <InputOption
-                      label="Lokasi "
-                      mode="contained"
-                      value={
-                        this.state.lokasiId != null &&
-                        this.state.lokasiOptions[this.state.lokasiId].name
-                      }
-                      optionData={this.state.lokasiOptions}
-                      useIndexReturn={true}
-                      onOptionChoose={(val) => this.setState({lokasiId: val})}
-                      hasHelper={false}
-                      style={{
-                        backgroundColor: 'transparent',
-                        color: 'grey',
-                        borderWidth: 0,
-                      }}
-                    />
-                  </View>
+                  {/* <View style={styles.textinput}> */}
+                  <FillForm
+                    label="Lokasi "
+                    mode="contained"
+                    value={
+                      this.state.lokasiId != null &&
+                      this.state.lokasiOptions[this.state.lokasiId].name
+                    }
+                    optionData={this.state.lokasiOptions}
+                    useIndexReturn={true}
+                    onOptionChoose={(val) => this.setState({lokasiId: val})}
+                    hasHelper={false}
+                    style={{
+                      backgroundColor:
+                        this.state.lokasiId != null
+                          ? 'transparent'
+                          : colors.yello,
+                      borderWidth: 0.4,
+                      borderColor: colors.yello,
+                      marginHorizontal: 20,
+                      height: this.state.lokasiId != null ? 45 : 40,
+                      width: width - 3 * h_margin,
+                      alignSelf: 'center',
+                    }}
+                  />
+                  {/* </View> */}
 
-                  <View style={{marginTop: 30}}>
+                  <View style={{marginTop: 20}}>
                     <Text
                       style={{
                         fontSize: 17,
@@ -515,64 +524,85 @@ export class FitToWorkScreen extends Component {
                       Menyatakan bahwa dalam 24 jam terakhir ,
                     </Text>
                   </View>
-                  <View style={{height: 15}} />
-                  <View style={styles.textinput}>
-                    <InputOption
-                      label="Waktu Istirahat               "
-                      mode="contained"
-                      value={
-                        this.state.jamId != null &&
-                        this.state.jamOptions[this.state.jamId].name
-                      }
-                      optionData={this.state.jamOptions}
-                      useIndexReturn={true}
-                      onOptionChoose={(val) => this.setState({jamId: val})}
-                      hasHelper={false}
-                      style={{
-                        backgroundColor: 'transparent',
-                        color: 'grey',
-                        borderWidth: 0,
-                      }}
-                    />
-                  </View>
-                  <View style={styles.textinput}>
-                    <InputOption
-                      label="Kondisi kesehatan         "
-                      mode="contained"
-                      value={
-                        this.state.sehatId != null &&
-                        this.state.sehatOptions[this.state.sehatId].name
-                      }
-                      optionData={this.state.sehatOptions}
-                      useIndexReturn={true}
-                      onOptionChoose={(val) => this.setState({sehatId: val})}
-                      hasHelper={false}
-                      style={{
-                        backgroundColor: 'transparent',
-                        color: 'grey',
-                        borderWidth: 0,
-                      }}
-                    />
-                  </View>
-                  <View style={styles.textinput}>
-                    <InputOption
-                      label="Mengkonsumsi obat     "
-                      mode="contained"
-                      value={
-                        this.state.obatId != null &&
-                        this.state.obatOptions[this.state.obatId].name
-                      }
-                      optionData={this.state.obatOptions}
-                      useIndexReturn={true}
-                      onOptionChoose={(val) => this.setState({obatId: val})}
-                      hasHelper={false}
-                      style={{
-                        backgroundColor: 'transparent',
-                        color: 'grey',
-                        borderWidth: 0,
-                      }}
-                    />
-                  </View>
+                  <View style={{height: spacer}} />
+                  <FillForm
+                    label="Waktu Istirahat"
+                    mode="contained"
+                    value={
+                      this.state.jamId != null &&
+                      this.state.jamOptions[this.state.jamId].name
+                    }
+                    optionData={this.state.jamOptions}
+                    useIndexReturn={true}
+                    onOptionChoose={(val) => this.setState({jamId: val})}
+                    hasHelper={false}
+                    style={{
+                      backgroundColor:
+                        this.state.jamId != null ? 'transparent' : colors.yello,
+                      color: this.state.jamId != null ? 'grey' : 'black',
+                      borderWidth: 0.4,
+                      // borderColor: colors.deepgrey,
+                      marginHorizontal: 20,
+                      height: this.state.jamId != null ? 45 : 40,
+                      width: width - 3 * h_margin,
+                      alignSelf: 'center',
+                      marginTop: 10,
+                    }}
+                  />
+                  <View style={{height: spacer}} />
+                  <FillForm
+                    label="Kondisi kesehatan"
+                    mode="contained"
+                    value={
+                      this.state.sehatId != null &&
+                      this.state.sehatOptions[this.state.sehatId].name
+                    }
+                    optionData={this.state.sehatOptions}
+                    useIndexReturn={true}
+                    onOptionChoose={(val) => this.setState({sehatId: val})}
+                    hasHelper={false}
+                    style={{
+                      backgroundColor:
+                        this.state.sehatId != null
+                          ? 'transparent'
+                          : colors.yello,
+                      color: this.state.sehatId ? 'grey' : 'black',
+                      borderWidth: 0.4,
+                      // borderColor: colors.deepgrey,
+                      marginHorizontal: 20,
+                      height: this.state.sehatId != null ? 45 : 40,
+                      width: width - 3 * h_margin,
+                      alignSelf: 'center',
+                      marginTop: 10,
+                    }}
+                  />
+                  <View style={{height: spacer}} />
+                  <FillForm
+                    label="Mengkonsumsi obat"
+                    mode="contained"
+                    value={
+                      this.state.obatId != null &&
+                      this.state.obatOptions[this.state.obatId].name
+                    }
+                    optionData={this.state.obatOptions}
+                    useIndexReturn={true}
+                    onOptionChoose={(val) => this.setState({obatId: val})}
+                    hasHelper={false}
+                    style={{
+                      backgroundColor:
+                        this.state.obatId != null
+                          ? 'transparent'
+                          : colors.yello,
+                      color: this.state.obatId ? 'grey' : 'black',
+                      borderWidth: 0.4,
+                      // borderColor: colors.deepgrey,
+                      marginHorizontal: 20,
+                      height: this.state.obatId != null ? 45 : 40,
+                      width: width - 3 * h_margin,
+                      alignSelf: 'center',
+                      marginTop: 10,
+                    }}
+                  />
                 </View>
 
                 {this.state.obatId === null ||
@@ -617,7 +647,7 @@ export class FitToWorkScreen extends Component {
                             height: 50,
                             // elevation: 3,
                             backgroundColor: '#F79F1F',
-                            width: width - 4 * h_margin,
+                            width: width - 3 * h_margin,
                           }}
                           icon={({size, color}) => (
                             <Icons name={'send'} size={size} color={color} />
@@ -758,16 +788,16 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   textinput: {
-    width: width - h_margin,
-    // marginHorizontal:h_margin,
+    width: width - 3 * h_margin,
     flexDirection: 'row',
     alignItems: 'center',
     alignSelf: 'center',
-    justifyContent: 'flex-start',
-    backgroundColor: 'white',
-    marginBottom: 7,
-    paddingLeft: 20,
-    height: 35,
+    // justifyContent: 'flex-start',
+    // backgroundColor: 'white',
+    borderColor: 'grey',
+    marginVertical: 5,
+    // paddingLeft: 20,
+    height: 45,
     borderRadius: 15,
   },
 });

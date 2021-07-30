@@ -25,32 +25,23 @@ const AutoResizeCard = (props) => {
             }}> */}
           {props.idleVal == null ? (
             <View style={styles.optionTextBorder}>
-              <View
+              {/* <View
                 style={{
                   alignSelf: 'center',
-                  alignItems: 'flex-start',
+                  alignItems: 'center',
+                  justifyContent: 'center',
                   flexDirection: 'column',
-                  paddingHorizontal: 15,
-                  paddingTop: 5,
-                  borderColor: colors.silverGrey,
+                  borderColor: colors.opaWhite,
+                  backgroundColor: colors.opaWhite,
                   borderWidth: 0.5,
                   borderRadius: width / 16,
                   width: width - 2 * h_margin,
                   height: 50,
                   marginVertical: 5,
-                  elevation: 3,
-                }}>
-                <Text style={styles.labelInactive}>QUANTITY </Text>
-                <Text
-                  style={{
-                    width: 35,
-                    textAlign: 'center',
-                    fontSize: 20,
-                    marginRight: 10,
-                  }}>
-                  :
-                </Text>
-              </View>
+                  elevation: 1,
+                }}> */}
+              <Text style={styles.labelInactive}>QUANTITY </Text>
+              {/* </View> */}
             </View>
           ) : (
             <View style={styles.disableBorder}>
@@ -60,6 +51,9 @@ const AutoResizeCard = (props) => {
                   alignItems: 'center',
                   justifyContent: 'flex-start',
                   flex: 1,
+                  backgroundColor: colors.safeArea,
+                  borderRadius: 25,
+                  paddingLeft: 8,
                 }}>
                 <Text style={styles.labelActive}>QUANTITY </Text>
                 <Text
@@ -76,7 +70,7 @@ const AutoResizeCard = (props) => {
                     textAlign: 'left',
                     fontSize: 25,
                     marginRight: 15,
-                    color: 'white',
+                    color: colors.ss6orange,
                   }}>
                   {props.idleVal} {props.idleTitle}
                 </Text>
@@ -113,11 +107,11 @@ const styles = {
     justifyContent: 'center',
     flexDirection: 'row',
     paddingHorizontal: 15,
-    borderColor: colors.silverGrey,
-    // backgroundColor: '#ffdd59',
+    borderColor: colors.opaWhite,
+    backgroundColor: colors.opaWhite,
     borderWidth: 0.5,
     borderRadius: width / 16,
-    width: width - 2 * h_margin,
+    width: width - 4 * h_margin,
     height: 50,
     marginVertical: 5,
     elevation: 3,
@@ -127,19 +121,21 @@ const styles = {
     alignItems: 'center',
     flexDirection: 'row',
     paddingHorizontal: 15,
-    borderColor: colors.grey,
-    backgroundColor: 'transparent',
+    // borderColor: colors.safeArea,
+    borderColor: colors.opaWhite,
+    backgroundColor: colors.safeArea,
     borderWidth: 0.5,
     borderRadius: width / 16,
-    width: width - 2 * h_margin,
+    width: width - 4 * h_margin,
     height: 50,
     marginVertical: 5,
     elevation: 3,
   },
   labelInactive: {
     // color: DefaultTheme.colors.placeholder,
-    color: 'white',
-    fontSize: 16,
+    color: colors.blek,
+    fontSize: 15,
+    fontWeight: '700',
     marginHorizontal: 5,
     width: 115,
     textAlign: 'left',
@@ -147,7 +143,7 @@ const styles = {
   },
   labelActive: {
     // color: DefaultTheme.colors.placeholder,
-    color: 'white',
+    color: colors.blek,
     fontSize: 10,
     marginLeft: 15,
     width: 65,

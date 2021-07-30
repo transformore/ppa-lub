@@ -382,7 +382,7 @@ class LubHistory extends Component {
           animationOut="fadeOutDown">
           <View
             style={{
-              height: 200,
+              height: this.state.storageId == null ? 160 : 200,
               backgroundColor: 'white',
               paddingVertical: 20,
               paddingHorizontal: 20,
@@ -422,7 +422,7 @@ class LubHistory extends Component {
                   style={{
                     backgroundColor: 'orange',
                     borderRadius: 25,
-                    height: 50,
+                    height: 40,
                     width: 150,
                     marginTop: 20,
                     alignItems: 'center',
@@ -469,7 +469,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 15,
     paddingTop: 5,
     borderColor: colors.silverGrey,
-    backgroundColor: colors.elusiveblue,
+    backgroundColor: colors.blek,
     borderWidth: 0.5,
     borderRadius: width / 16,
     width: width / 2,

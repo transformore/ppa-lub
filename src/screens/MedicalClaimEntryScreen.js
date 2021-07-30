@@ -21,7 +21,7 @@ import {
 import {ScrollView} from 'react-native-gesture-handler';
 import Axios from 'axios';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
-import {LoadingIndicator, ErrorData, InputOption} from '../components';
+import {LoadingIndicator, ErrorData, FillForm} from '../components';
 import {AppContext} from '../context';
 import Modal from 'react-native-modal';
 import {AppExt} from '../utils';
@@ -437,7 +437,7 @@ export class MedicalClaimEntryScreen extends React.Component {
                   <Text>{this.state.jenisClaimId}</Text>
                   <Text>{this.context.userData.nrp}</Text>
                 </View> */}
-                <InputOption
+                <FillForm
                   label="Jenis Claim"
                   value={
                     this.state.jenisClaimId != null &&
@@ -478,7 +478,7 @@ export class MedicalClaimEntryScreen extends React.Component {
                     'LEN' ||
                     this.state.jenisClaimOptions[this.state.jenisClaimId]
                       .code == 'SCH') && (
-                    <InputOption
+                    <FillForm
                       label="Sub Claim"
                       isLoading={this.state.isSubClaimLoading}
                       value={
@@ -510,7 +510,7 @@ export class MedicalClaimEntryScreen extends React.Component {
                     />
                   )}
                 {this.state.jenisClaimId != null && (
-                  <InputOption
+                  <FillForm
                     label="Hub Keluarga"
                     isLoading={this.state.isHubLoading}
                     // value={
@@ -824,8 +824,8 @@ const styles = {
     paddingHorizontal: 25,
     // borderColor: '#0984e3',
     borderColor: '#F79F1F',
-    // backgroundColor: '#81ecec',
-    backgroundColor: '#dff9fb',
+    backgroundColor: '#81ecec',
+    // backgroundColor: '#dff9fb',
     borderWidth: 0.5,
     borderRadius: width / 16,
     width: width - 2 * h_margin,

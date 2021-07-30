@@ -26,21 +26,32 @@ import LinearGradient from 'react-native-linear-gradient'; // import DateTimePic
 import {
   LoadingIndicator,
   ErrorData,
-  InputOption,
+  FillForm,
   AutoResizeCard,
   Volume,
 } from '../components';
+// import {AppExt} from '../utils';
+// import ImagePicker from 'react-native-image-crop-picker';
+// import FeatherIcons from 'react-native-vector-icons/Feather';
+// import RBSheet from 'react-native-raw-bottom-sheet';
 import {FlatList} from 'react-native-gesture-handler';
 import {colors} from '../styles';
 import {AppContext} from '../context';
 import Modal from 'react-native-modal';
-import {AppExt} from '../utils';
-import ImagePicker from 'react-native-image-crop-picker';
-import FeatherIcons from 'react-native-vector-icons/Feather';
-import RBSheet from 'react-native-raw-bottom-sheet';
 import Icons from 'react-native-vector-icons/MaterialCommunityIcons';
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons';
+import AntDesign from 'react-native-vector-icons/AntDesign';
 const {width, height} = Dimensions.get('screen');
 const h_margin = 15;
+const lubeType = <Icons name="oil" size={25} color="#900" />;
+const komponen = <FontAwesome name="gears" size={20} color="#EE5A24" />;
+const unitCn = <Icons name="tractor" size={25} color={colors.deeppurple} />;
+const hmUnit = <AntDesign name="hourglass" size={20} color="#EE5A24" />;
+const status = <Icons name="tools" size={20} color={colors.lightblue} />;
+const lokasi = (
+  <SimpleLineIcons name="location-pin" size={20} color="#EE5A24" />
+);
 
 export class LubScreen extends React.Component {
   constructor(props) {
@@ -325,21 +336,26 @@ export class LubScreen extends React.Component {
           barStyle="light-content"
           hidden={false}
           // backgroundColor={'#192a56'}
-          backgroundColor={'rgba(5,10,25,0.9)'}
+          backgroundColor={'#192a56'}
           translucent={false}
         />
-
-        {/* <Appbar.Header style={{zIndex: 3}}>
-          <Appbar.BackAction onPress={this.goBack} />
-          <Appbar.Content title="Grease Oil Transaction" />
-        </Appbar.Header> */}
         <LinearGradient
-          colors={['rgba(5,10,25,0.9)', '#3b5998', '#192f6a']}
+          // colors={['rgba(5,10,25,0.9)', '#3b5998', '#192f6a']}
+          // colors={['rgba(5,10,25,0.9)', 'white', '#293B5F']}
+          colors={[
+            '#192a56',
+            colors.opaWhite,
+            colors.safeArea,
+            colors.safeArea,
+            colors.safeArea,
+            colors.safeArea,
+            colors.blek,
+          ]}
           style={styles.linearGradient}>
           <View
             style={{
-              flex: 1,
-              // backgroundColor: 'rgba(5,10,25,0.9)',
+              // flex: 1,
+              height: this.context.selectedCard == 3 ? height : height - 270,
               justifyContent: 'center',
             }}>
             {this.state.loading ? (
@@ -350,39 +366,77 @@ export class LubScreen extends React.Component {
               <ScrollView style={{flex: 1}}>
                 <View
                   style={{
-                    paddingHorizontal: 13,
+                    width: width,
+                    alignItems: 'center',
+                    alignSelf: 'center',
+                    justifyContent: 'center',
                   }}>
+                  <View style={{height: 15}} />
+                  {this.context.selectedCard == 3 ? (
+                    <View style={{height: 0}} />
+                  ) : (
+                    <View
+                      style={{
+                        flexDirection: 'column',
+                        width: width - 3 * h_margin,
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        paddingVertical: 15,
+                        borderTopLeftRadius: 5,
+                        borderTopRightRadius: 5,
+                        height: 130,
+                      }}>
+                      <View>
+                        <Text style={styles.screenHeader}>
+                          OIl & GREASE TRANSACTION
+                        </Text>
+                      </View>
+                      <View style={{height: 25}} />
+                      <View style={styles.userTextborder}>
+                        <AntDesign
+                          name="user"
+                          size={25}
+                          color={colors.darkBlue}
+                        />
+                        <Text style={styles.userContent}>
+                          {this.context.userData.nama}
+                        </Text>
+                      </View>
+                      <View style={styles.userTextborder}>
+                        <Text style={styles.jabatanContent}>
+                          {this.context.userData.posisi}
+                        </Text>
+                      </View>
+                    </View>
+                  )}
+
+                  <View style={{height: 20}} />
                   <View
                     style={{
-                      borderColor: colors.grey,
-                      width: width - 2 * h_margin,
+                      backgroundColor: 'white',
+                      borderRadius: 30,
+                      width: width - 3 * h_margin,
+                      paddingVertical: 10,
                       alignItems: 'center',
-                      alignSelf: 'center',
-                      // marginBottom: 25,
+                      justifyContent: 'center',
+                      flexDirection: 'row',
+                      // height: 50,
                     }}>
-                    <View>
-                      <Text style={styles.screenHeader}>
-                        OIl & GREASE TRANSACTION
-                      </Text>
-                    </View>
-                    <View style={styles.userTextborder}>
-                      <Text style={styles.userContent}>
-                        {this.context.userData.nama}
-                      </Text>
-                    </View>
-                    <View style={styles.userTextborder}>
-                      <Text style={styles.jabatanContent}>
-                        {this.context.userData.posisi}
-                      </Text>
-                    </View>
-                    <View style={{height: 10}} />
-                    <View style={styles.userTextborder}>
-                      <Text style={styles.storageContent}>
-                        {this.context.oilGreaseStorage}
-                      </Text>
-                    </View>
+                    <Text style={{fontSize: 18, marginRight: 10}}>
+                      {/* <Icons name="tanker-truck" size={25} color="#EE5A24" />{' '} */}
+                      STORAGE :
+                    </Text>
+                    <Text
+                      style={{
+                        fontSize: 20,
+                        color: colors.red,
+                        fontWeight: 'bold',
+                      }}>
+                      {this.context.oilGreaseStorage}
+                    </Text>
                   </View>
-                  <View style={{height: 0}} />
+                  {/* <View style={{height: 20}} /> */}
+                  <Divider style={{height: 20}} />
                   <View
                     style={{
                       flexDirection: 'row',
@@ -390,47 +444,65 @@ export class LubScreen extends React.Component {
                       alignItems: 'center',
                       alignSelf: 'center',
                       justifyContent: 'center',
-                      width: width - 2.1 * h_margin,
+                      width: width - 3 * h_margin,
                     }}>
-                    <InputOption
-                      label="UNIT C/N  >>"
-                      color="white"
-                      value={
-                        this.state.unitId != null &&
-                        this.state.unitOptions[this.state.unitId].name
-                      }
-                      optionData={this.state.unitOptions}
-                      useIndexReturn={true}
-                      onOptionChoose={(val) => this.setUnit(val)}
-                      hasHelper={false}
-                      style={
-                        this.state.unitId == null
-                          ? styles.unitBorder
-                          : styles.unitDisableBorder
-                      }
-                      isSearchable={true}
-                    />
+                    <View>
+                      <FillForm
+                        topPosition={-13}
+                        label="C/N"
+                        icon={unitCn}
+                        color="white"
+                        value={
+                          this.state.unitId != null &&
+                          this.state.unitOptions[this.state.unitId].name
+                        }
+                        optionData={this.state.unitOptions}
+                        useIndexReturn={true}
+                        onOptionChoose={(val) => this.setUnit(val)}
+                        hasHelper={false}
+                        style={
+                          this.state.unitId == null
+                            ? styles.unitBorder
+                            : styles.unitDisableBorder
+                        }
+                        isSearchable={true}
+                      />
+                    </View>
+                    <View style={{width: 5}} />
                     {this.state.hm == null ? (
                       <View style={styles.hmBorder}>
                         <TouchableOpacity
                           onPress={() => {
                             this.state.unitId != null ? this.getLastHm() : null;
                           }}>
-                          <Text style={styles.hmLabelInactive}>HM >></Text>
+                          <Text style={styles.hmLabelInactive}>
+                            {hmUnit} Hourmeter
+                          </Text>
                         </TouchableOpacity>
                       </View>
                     ) : (
                       <View style={styles.hmDisableBorder}>
-                        <Text style={styles.hmLabelActive}>HM</Text>
+                        <View
+                          style={{
+                            position: 'absolute',
+                            top: -7,
+                            paddingHorizontal: 25,
+                            left: 20,
+                          }}>
+                          <Text style={styles.hmLabelActive}>{hmUnit}</Text>
+                        </View>
                         <TextInput
                           disabled={this.state.hm == null}
                           mode="cotained"
                           style={{
-                            color: colors.white,
+                            // color: colors.white,
+                            color: colors.blue,
                             fontSize: 18,
                             fontWeight: 'bold',
+                            height: 50,
                           }}
-                          label="HM"
+                          // label="HM"
+                          label={hmUnit}
                           placeholder=""
                           value={this.state.hm}
                           keyboardType="numeric"
@@ -439,6 +511,7 @@ export class LubScreen extends React.Component {
                       </View>
                     )}
                   </View>
+                  <View style={{height: 6}} />
                   <View
                     style={{
                       width: width - 3 * h_margin,
@@ -446,8 +519,9 @@ export class LubScreen extends React.Component {
                       alignItems: 'center',
                       justifyContent: 'center',
                     }}>
-                    <InputOption
-                      label="JENIS PELUMAS"
+                    <FillForm
+                      label="Lubrican Type"
+                      icon={lubeType}
                       value={
                         this.state.typeId != null &&
                         this.state.typeOptions[this.state.typeId].name
@@ -459,13 +533,23 @@ export class LubScreen extends React.Component {
                       style={
                         this.state.typeId == null
                           ? styles.optiontextborder
-                          : styles.lubDisableBorder
+                          : this.state.typeOptions[this.state.typeId].name
+                              .length < 30
+                          ? styles.lubDisableBorder
+                          : styles.lubHugeBorder
                       }
                       isSearchable={true}
                     />
                   </View>
+                  <View style={{height: 10}} />
                   {this.state.typeId !== null ? (
-                    <View>
+                    <View
+                      style={{
+                        flex: 1,
+                        // position: 'absolute',
+                        top: -10,
+                        zIndex: 3,
+                      }}>
                       <AutoResizeCard
                         selected={this.context.selectedCard}
                         id={3}
@@ -485,35 +569,71 @@ export class LubScreen extends React.Component {
                           {...this.props}
                         />
                       </AutoResizeCard>
-                      {this.state.selectedCard == null ||
-                      this.state.selectedCard == 5 ? (
-                        <View style={{height: 0}} />
-                      ) : (
-                        <Button
-                          loading={this.state.loading}
-                          dark
-                          // color={colors.primary}
-                          mode="contained"
-                          onPress={() => this._selectCard(5)}
-                          style={{
-                            width: 260,
-                            marginHorizontal: 50,
-                            marginTop: 20,
-                            paddingVertical: 8,
-                            fontSize: 25,
-                            borderRadius: 28,
-                            backgroundColor: '#F79F1F',
-                            alignSelf: 'center',
-                          }}>
-                          Enter
-                        </Button>
-                      )}
                     </View>
                   ) : (
                     <View style={{height: 0}} />
                   )}
-                  <InputOption
-                    label="LOCATION"
+                  <View style={{height: 6}} />
+                  <View
+                    style={{
+                      width: width - 2 * h_margin,
+                      alignSelf: 'center',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      flexDirection: 'row',
+                    }}>
+                    <View>
+                      <FillForm
+                        label="Component"
+                        icon={komponen}
+                        value={
+                          this.state.componentId != null &&
+                          this.state.componentOptions[this.state.componentId]
+                            .name
+                        }
+                        optionData={this.state.componentOptions}
+                        useIndexReturn={true}
+                        onOptionChoose={(val) =>
+                          this.setState({componentId: val})
+                        }
+                        hasHelper={false}
+                        style={
+                          this.state.componentId == null
+                            ? styles.komponenBorder
+                            : styles.komponenDisableBorder
+                        }
+                        isSearchable={true}
+                      />
+                    </View>
+                    <View style={{width: 5}} />
+                    <View>
+                      <FillForm
+                        label="Status"
+                        icon={status}
+                        value={
+                          this.state.statusId != null &&
+                          this.state.statusOptions[this.state.statusId].name
+                        }
+                        optionData={this.state.statusOptions}
+                        useIndexReturn={true}
+                        onOptionChoose={(val) => this.setState({statusId: val})}
+                        hasHelper={false}
+                        style={
+                          this.state.statusId == null
+                            ? styles.statusBorder
+                            : // this.state.statusId.length > 22
+                              // ?
+                              styles.statusDisableBorder
+                          // : styles.lubHugeBorder
+                        }
+                        isSearchable={true}
+                      />
+                    </View>
+                  </View>
+                  <View style={{height: 10}} />
+                  <FillForm
+                    label="Location"
+                    icon={lokasi}
                     value={
                       this.state.locationId != null &&
                       this.state.locationOptions[this.state.locationId].name
@@ -525,322 +645,273 @@ export class LubScreen extends React.Component {
                     style={
                       this.state.locationId == null
                         ? styles.optiontextborder
-                        : styles.disableBorder
+                        : this.state.locationOptions[this.state.locationId].name
+                            .length < 25
+                        ? styles.disableBorder
+                        : styles.lubHugeBorder
                     }
                     isSearchable={true}
                   />
-                  <View
-                    style={{
-                      flexDirection: 'row',
-                      // flex: 1,
-                      alignItems: 'center',
-                      alignSelf: 'center',
-                      justifyContent: 'space-between',
-                      width: width - 1.7 * h_margin,
-                    }}>
-                    <InputOption
-                      label="KOMPONEN"
-                      value={
-                        this.state.componentId != null &&
-                        this.state.componentOptions[this.state.componentId].name
-                      }
-                      optionData={this.state.componentOptions}
-                      useIndexReturn={true}
-                      onOptionChoose={(val) =>
-                        this.setState({componentId: val})
-                      }
-                      hasHelper={false}
-                      style={
-                        this.state.componentId == null
-                          ? styles.unitBorder
-                          : styles.unitDisableBorder
-                      }
-                      isSearchable={true}
-                    />
-                    <View
-                      style={{
-                        flexDirection: 'row',
-                        flex: 1,
-                        alignSelf: 'flex-start',
-                        justifyContent: 'flex-start',
-                        marginRight: 25,
-                      }}>
-                      <InputOption
-                        label="STATUS"
-                        value={
-                          this.state.statusId != null &&
-                          this.state.statusOptions[this.state.statusId].name
-                        }
-                        optionData={this.state.statusOptions}
-                        useIndexReturn={true}
-                        onOptionChoose={(val) => this.setState({statusId: val})}
-                        hasHelper={false}
-                        style={
-                          this.state.statusId == null
-                            ? styles.hmBorder
-                            : styles.hmDisableBorder
-                        }
-                        isSearchable={true}
-                      />
-                    </View>
-                  </View>
                 </View>
-                {this.state.volume != null &&
-                this.state.hm != null &&
-                // this.state.storageId != null &&
-                this.state.unitId != null &&
-                this.state.locationId != null &&
-                this.state.typeId != null &&
-                this.state.componentId != null &&
-                this.state.statusId != null ? (
-                  <View style={{alignSelf: 'center'}}>
-                    <TouchableNativeFeedback
-                      onPress={() => this.showSendConfirm()}>
-                      <View
-                        style={{
-                          marginTop: 35,
-                          width: width - 2 * h_margin,
-                          height: 50,
-                          backgroundColor: colors.ss6orange,
-                          justifyContent: 'center',
-                          alignItems: 'center',
-                          borderRadius: 25,
-                        }}>
-                        <Title style={{color: Colors.white}}>
-                          Simpan dan Kirim
-                        </Title>
-                      </View>
-                    </TouchableNativeFeedback>
-                  </View>
-                ) : this.state.listLub.length > 0 ? (
-                  <View
-                    style={{
-                      flex: 1,
-                      marginHorizontal: 15,
-                      borderWidth: 0.8,
-                      borderColor: colors.opaWhite,
-                      marginTop: 15,
-                      borderRadius: 7,
-                      width: width - 2 * h_margin,
-                      alignSelf: 'center',
-                      justifyContent: 'center',
-                      paddingBottom: 5,
-                    }}>
-                    <View
-                      style={{
-                        alignItems: 'center',
-                        height: 35,
-                        justifyContent: 'center',
-                        alignSelf: 'center',
-                      }}>
-                      <Text
-                        style={{
-                          textAlign: 'center',
-                          marginVertical: 5,
-                          height: 25,
-                          color: 'white',
-                        }}>
-                        LUBRICATING HISTORY
-                      </Text>
-                    </View>
-                    <View
-                      style={{
-                        width: width - 2 * h_margin,
-                        backgroundColor: colors.blue,
-                        height: 20,
-                        flexDirection: 'row',
-                        alignItems: 'center',
-                      }}>
-                      <Text
-                        style={{
-                          fontSize: 12,
-                          textAlign: 'center',
-                          color: colors.white,
-                          width: 60,
-                        }}>
-                        Tanggal
-                      </Text>
-                      <Text
-                        style={{
-                          fontSize: 12,
-                          textAlign: 'center',
-                          color: colors.white,
-                          width: 30,
-                        }}>
-                        Unit
-                      </Text>
-                      <Text
-                        style={{
-                          fontSize: 12,
-                          textAlign: 'center',
-                          color: colors.white,
-                          width: 80,
-                        }}>
-                        HM
-                      </Text>
-                      <Text
-                        style={{
-                          fontSize: 12,
-                          textAlign: 'center',
-                          color: colors.white,
-                          width: 40,
-                        }}>
-                        Qty
-                      </Text>
-                      <Text
-                        style={{
-                          fontSize: 12,
-                          textAlign: 'left',
-                          color: colors.white,
-                          width: 185,
-                        }}>
-                        Jenis Pelumas
-                      </Text>
-                    </View>
-                    {this.state.isLoading ? (
-                      <LoadingIndicator />
-                    ) : this.state.isRequestError ? (
-                      <ErrorData onRetry={this.getLub} />
-                    ) : !this.state.listLub ? (
-                      <>
-                        {/* <View style={{height: 30}} /> */}
-                        <View
-                          style={{
-                            flex: 1,
-                            alignItems: 'center',
-                            justifyContent: 'center',
-                            backgroundColor: 'transparent',
-                          }}>
-                          <Icons
-                            style={{margin: 10}}
-                            name="history"
-                            size={75}
-                            color={Colors.grey400}
-                          />
-                          <Caption>No Data</Caption>
-                        </View>
-                      </>
-                    ) : (
-                      <FlatList
-                        data={this.state.listLub}
-                        renderItem={({item}) => {
-                          const monthName = [
-                            '/01',
-                            '/02',
-                            '/03',
-                            '/04',
-                            '/05',
-                            '/06',
-                            '/07',
-                            '/08',
-                            '/09',
-                            '/10',
-                            '/11',
-                            '/12',
-                          ];
-
-                          const date = new Date(item.tanggal);
-                          const formattedDate = `${
-                            date.getDate() < 10 ? '0' : ''
-                          }${date.getDate()}${monthName[date.getMonth()]}`;
-                          return (
-                            <View
-                              style={{
-                                flexDirection: 'row',
-                                backgroundColor: colors.opaWhite,
-                              }}>
-                              <Text
-                                style={{
-                                  fontSize: 12,
-                                  paddingLeft: 15,
-                                  alignSelf: 'center',
-                                  paddingVertical: 5,
-                                  color: 'white',
-                                  width: 60,
-                                }}>
-                                {formattedDate || '-'}
-                              </Text>
-                              <Text
-                                style={{
-                                  fontSize: 12,
-                                  paddingHorizontal: 0,
-                                  paddingVertical: 5,
-                                  alignSelf: 'center',
-                                  textAlign: 'left',
-                                  color: colors.yello,
-                                  width: 40,
-                                }}>
-                                {item.unit || '-'}
-                              </Text>
-                              <Text
-                                style={{
-                                  fontSize: 12,
-                                  paddingLeft: 7,
-                                  paddingVertical: 5,
-                                  alignSelf: 'center',
-                                  textAlign: 'right',
-                                  color: 'white',
-                                  width: 60,
-                                }}>
-                                {item.hm || '-'}
-                              </Text>
-                              <Text
-                                style={{
-                                  fontSize: 12,
-                                  paddingLeft: 7,
-                                  paddingVertical: 5,
-                                  alignSelf: 'center',
-                                  textAlign: 'right',
-                                  color: colors.hijaudaun,
-                                  width: 40,
-                                }}>
-                                {parseFloat(item.qty).toFixed(1) || '-'}
-                              </Text>
-                              <Text
-                                style={{
-                                  fontSize: 10,
-                                  paddingLeft: 10,
-                                  paddingVertical: 5,
-                                  alignSelf: 'center',
-                                  textAlign: 'left',
-                                  color: 'white',
-                                  width: 175,
-                                }}>
-                                {item.jenis_oilgrease || '-'}
-                              </Text>
-                            </View>
-                          );
-                        }}
-                        keyExtractor={(item, index) => index.toString()}
-                        ItemSeparatorComponent={Divider}
-                        contentContainerStyle={{padding: 0}}
-                      />
-                    )}
-                  </View>
-                ) : (
-                  <View style={{height: 0}} />
-                )}
-                <View style={{height: 10}} />
-                <TouchableOpacity
-                  onPress={() => {
-                    this.props.navigation.navigate('LubHistory');
-                  }}>
-                  {/* <View> */}
-                  <Text
-                    style={{
-                      textAlign: 'center',
-                      fontSize: 18,
-                      marginTop: 15,
-                      color: colors.blue,
-                    }}>
-                    Back
-                  </Text>
-                  {/* </View> */}
-                </TouchableOpacity>
-                <Divider style={{height: 1.5}} />
               </ScrollView>
             )}
           </View>
+          <ScrollView>
+            {this.state.volume != null &&
+            this.state.hm != null &&
+            // this.state.storageId != null &&
+            this.state.unitId != null &&
+            this.state.locationId != null &&
+            this.state.typeId != null &&
+            this.state.componentId != null &&
+            this.state.statusId != null ? (
+              <View
+                style={{alignSelf: 'center', height: height / 4, width: width}}>
+                <TouchableNativeFeedback onPress={() => this.showSendConfirm()}>
+                  <View
+                    style={{
+                      marginTop: 35,
+                      width: width - 4 * h_margin,
+                      height: 45,
+                      backgroundColor: colors.ss6orange,
+                      justifyContent: 'center',
+                      alignItems: 'center',
+                      alignSelf: 'center',
+                      borderRadius: 25,
+                    }}>
+                    <Title style={{color: Colors.white, fontSize: 18}}>
+                      Simpan & Kirim
+                    </Title>
+                  </View>
+                </TouchableNativeFeedback>
+              </View>
+            ) : this.state.listLub.length > 0 ? (
+              <View
+                style={{
+                  flex: 1,
+                  borderWidth: 0.8,
+                  borderColor: colors.opaWhite,
+                  marginTop: 15,
+                  borderRadius: 7,
+                  width: width,
+                  alignSelf: 'center',
+                  justifyContent: 'center',
+                  paddingBottom: 5,
+                }}>
+                <View
+                  style={{
+                    alignItems: 'center',
+                    height: 35,
+                    justifyContent: 'center',
+                    alignSelf: 'center',
+                  }}>
+                  <Text
+                    style={{
+                      textAlign: 'center',
+                      marginVertical: 5,
+                      height: 25,
+                      color: colors.blek,
+                    }}>
+                    LUBRICATING HISTORY
+                  </Text>
+                </View>
+                <View
+                  style={{
+                    width: width,
+                    backgroundColor: colors.blue,
+                    height: 20,
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                  }}>
+                  <Text
+                    style={{
+                      fontSize: 12,
+                      textAlign: 'center',
+                      alignSelf: 'center',
+                      color: colors.white,
+                      width: 70,
+                    }}>
+                    Date
+                  </Text>
+                  <Text
+                    style={{
+                      fontSize: 12,
+                      textAlign: 'center',
+                      color: colors.white,
+                      width: 35,
+                    }}>
+                    Unit
+                  </Text>
+                  <Text
+                    style={{
+                      fontSize: 12,
+                      textAlign: 'center',
+                      color: colors.white,
+                      width: 80,
+                    }}>
+                    HM
+                  </Text>
+                  <Text
+                    style={{
+                      fontSize: 12,
+                      textAlign: 'center',
+                      color: colors.white,
+                      width: 45,
+                    }}>
+                    Qty
+                  </Text>
+                  <Text
+                    style={{
+                      fontSize: 12,
+                      textAlign: 'left',
+                      color: colors.white,
+                      width: 185,
+                    }}>
+                    Jenis Pelumas
+                  </Text>
+                </View>
+                {this.state.isLoading ? (
+                  <LoadingIndicator />
+                ) : this.state.isRequestError ? (
+                  <ErrorData onRetry={this.getLub} />
+                ) : !this.state.listLub ? (
+                  <>
+                    {/* <View style={{height: 30}} /> */}
+                    <View
+                      style={{
+                        flex: 1,
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        backgroundColor: 'transparent',
+                      }}>
+                      <Icons
+                        style={{margin: 10}}
+                        name="history"
+                        size={75}
+                        color={Colors.grey400}
+                      />
+                      <Caption>No Data</Caption>
+                    </View>
+                  </>
+                ) : (
+                  <FlatList
+                    data={this.state.listLub}
+                    renderItem={({item}) => {
+                      const monthName = [
+                        '/01',
+                        '/02',
+                        '/03',
+                        '/04',
+                        '/05',
+                        '/06',
+                        '/07',
+                        '/08',
+                        '/09',
+                        '/10',
+                        '/11',
+                        '/12',
+                      ];
+
+                      const date = new Date(item.tanggal);
+                      const formattedDate = `${
+                        date.getDate() < 10 ? '0' : ''
+                      }${date.getDate()}${monthName[date.getMonth()]}`;
+                      return (
+                        <View
+                          style={{
+                            flexDirection: 'row',
+                            backgroundColor: colors.lightGrey,
+                          }}>
+                          <Text
+                            style={{
+                              fontSize: 12,
+                              paddingLeft: 15,
+                              alignSelf: 'center',
+                              textAlign: 'center',
+                              paddingVertical: 5,
+                              color: colors.deepgray,
+                              width: 65,
+                            }}>
+                            {formattedDate || '-'}
+                          </Text>
+                          <Text
+                            style={{
+                              fontSize: 11,
+                              paddingHorizontal: 0,
+                              paddingVertical: 5,
+                              alignSelf: 'center',
+                              textAlign: 'left',
+                              color: colors.darkBlue,
+                              width: 50,
+                            }}>
+                            {item.unit || '-'}
+                          </Text>
+                          <Text
+                            style={{
+                              fontSize: 12,
+                              paddingLeft: 7,
+                              paddingVertical: 5,
+                              alignSelf: 'center',
+                              textAlign: 'right',
+                              color: colors.ss6orange,
+                              width: 55,
+                            }}>
+                            {item.hm || '-'}
+                          </Text>
+                          <Text
+                            style={{
+                              fontSize: 12,
+                              paddingLeft: 7,
+                              paddingVertical: 5,
+                              alignSelf: 'center',
+                              textAlign: 'right',
+                              color: colors.darkBlue,
+                              width: 50,
+                            }}>
+                            {parseFloat(item.qty).toFixed(1) || '-'}
+                          </Text>
+                          <Text
+                            style={{
+                              fontSize: 10,
+                              paddingLeft: 10,
+                              paddingVertical: 5,
+                              alignSelf: 'center',
+                              textAlign: 'left',
+                              color: colors.blue,
+                              width: 140,
+                            }}>
+                            {item.jenis_oilgrease || '-'}
+                          </Text>
+                        </View>
+                      );
+                    }}
+                    keyExtractor={(item, index) => index.toString()}
+                    ItemSeparatorComponent={Divider}
+                    contentContainerStyle={{padding: 0}}
+                  />
+                )}
+              </View>
+            ) : (
+              <View style={{height: 0}} />
+            )}
+            <View style={{height: 30}} />
+            <TouchableOpacity
+              onPress={() => {
+                this.props.navigation.navigate('LubHistory');
+              }}>
+              {/* <View> */}
+              <Text
+                style={{
+                  textAlign: 'center',
+                  fontSize: 18,
+                  marginTop: 15,
+                  color: '#341f97',
+                }}>
+                Back
+              </Text>
+              {/* </View> */}
+            </TouchableOpacity>
+          </ScrollView>
         </LinearGradient>
         <Modal
           isVisible={this.state.loading}
@@ -872,44 +943,105 @@ const styles = {
     alignItems: 'center',
     justifyContent: 'center',
     // flexDirection: 'row',
-    paddingHorizontal: 15,
+    paddingHorizontal: 40,
     borderColor: colors.opaWhite,
     backgroundColor: colors.opaWhite,
     borderWidth: 3,
     borderRadius: width / 16,
-    width: width - 2 * h_margin,
-    height: 50,
+    width: width / 1.25,
+    height: 45,
     marginVertical: 5,
     elevation: 3,
   },
   unitBorder: {
-    alignSelf: 'flex-start',
+    alignSelf: 'center',
     alignItems: 'center',
     flexDirection: 'row',
     paddingHorizontal: 15,
     borderColor: colors.opaWhite,
     backgroundColor: colors.opaWhite,
+    // backgroundColor: colors.safeArea,
     borderWidth: 3,
     borderRadius: width / 16,
-    width: 150,
-    height: 50,
+    width: width / 2.7,
+    height: 45,
     marginVertical: 5,
     elevation: 3,
   },
-  disableBorder: {
+  komponenBorder: {
     alignSelf: 'center',
     alignItems: 'flex-start',
+    // flexDirection: 'row',
+    paddingHorizontal: 15,
+    borderColor: colors.opaWhite,
+    backgroundColor: colors.opaWhite,
+    borderWidth: 0.5,
+    borderRadius: width / 16,
+    width: width / 2.6,
+    height: 45,
+    marginVertical: 5,
+    elevation: 2,
+  },
+  statusBorder: {
+    alignSelf: 'center',
+    // alignItems: 'center',
+    // justifyContent: 'center',
+    paddingHorizontal: 15,
+    borderColor: colors.opaWhite,
+    backgroundColor: colors.opaWhite,
+    // backgroundColor: colors.safeArea,
+    borderWidth: 0.5,
+    borderRadius: width / 16,
+    width: width / 2.5,
+    height: 45,
+    marginVertical: 5,
+    elevation: 3,
+  },
+  komponenDisableBorder: {
+    alignSelf: 'center',
+    alignItems: 'center',
+    flexDirection: 'row',
+    paddingHorizontal: 15,
+    borderColor: colors.opaWhite,
+    // backgroundColor: colors.opaWhite,
+    backgroundColor: colors.safeArea,
+    borderWidth: 0.5,
+    borderRadius: width / 16,
+    width: width / 2.7,
+    height: 45,
+    marginVertical: 5,
+    elevation: 3,
+  },
+  statusDisableBorder: {
+    alignSelf: 'center',
+    alignItems: 'center',
+    flexDirection: 'row',
+    paddingHorizontal: 15,
+    borderColor: colors.opaWhite,
+    // backgroundColor: colors.opaWhite,
+    backgroundColor: colors.safeArea,
+    borderWidth: 0.5,
+    borderRadius: width / 16,
+    width: width / 2.05,
+    height: 45,
+    marginVertical: 5,
+    elevation: 2,
+  },
+  disableBorder: {
+    alignSelf: 'center',
+    alignItems: 'center',
     flexDirection: 'column',
     paddingHorizontal: 15,
     paddingTop: 5,
     borderColor: colors.opaWhite,
+    backgroundColor: colors.safeArea,
     // backgroundColor: colors.elusiveblue,
     borderWidth: 0.5,
     borderRadius: width / 16,
-    width: width - 2 * h_margin,
-    height: 50,
+    width: width - 4 * h_margin,
+    height: 45,
     marginVertical: 5,
-    elevation: 3,
+    elevation: 2,
   },
   unitDisableBorder: {
     alignSelf: 'flex-start',
@@ -919,12 +1051,14 @@ const styles = {
     paddingHorizontal: 10,
     paddingTop: 5,
     borderColor: colors.opaWhite,
+    backgroundColor: colors.safeArea,
     borderWidth: 0.5,
     borderRadius: width / 16,
-    width: 150,
-    height: 50,
+    width: width / 2.7,
+
+    height: 45,
     marginVertical: 5,
-    elevation: 3,
+    elevation: 2,
   },
   hmBorder: {
     alignSelf: 'center',
@@ -933,25 +1067,27 @@ const styles = {
     paddingHorizontal: 15,
     borderColor: colors.opaWhite,
     backgroundColor: colors.opaWhite,
+    // backgroundColor: colors.safeArea,
     borderWidth: 3,
     borderRadius: width / 16,
-    width: 210,
-    height: 50,
+    width: width / 2.5,
+    height: 45,
     marginVertical: 5,
     elevation: 3,
   },
   hmDisableBorder: {
     alignSelf: 'center',
-    alignItems: 'flex-start',
+    alignItems: 'center',
     justifyContent: 'center',
-    flexDirection: 'column',
-    paddingHorizontal: 25,
+    flexDirection: 'row',
+    paddingHorizontal: 5,
     paddingTop: 5,
     borderColor: colors.opaWhite,
+    backgroundColor: colors.safeArea,
     borderWidth: 0.5,
     borderRadius: width / 16,
-    width: 212,
-    height: 50,
+    width: width / 2.1,
+    height: 45,
     marginVertical: 5,
     elevation: 3,
   },
@@ -959,45 +1095,52 @@ const styles = {
     alignSelf: 'center',
     alignItems: 'center',
     justifyContent: 'center',
-    width: width - 2 * h_margin,
+    width: width - 3 * h_margin,
     height: 25,
   },
   userLabel: {width: 90, fontSize: 18},
   userContent: {
-    width: width - 2 * h_margin,
-    fontSize: 20,
+    width: width - 3 * h_margin,
+    fontSize: 18,
     fontWeight: 'bold',
-    color: 'white',
+    // color: colors.ss6orange,
+    color: colors.darkBlue,
     textAlign: 'center',
   },
   unitContent: {
-    width: width - 2 * h_margin,
+    width: width - 3 * h_margin,
     fontSize: 16,
     fontWeight: 'bold',
-    color: 'white',
+    color: colors.blek,
     textAlign: 'center',
   },
   jabatanContent: {
-    width: width - 2 * h_margin,
+    width: width - 3 * h_margin,
     fontSize: 12,
-    color: colors.yellow,
+    color: 'black',
     textAlign: 'center',
   },
   screenHeader: {
-    width: width - 2 * h_margin,
+    width: width - 8 * h_margin,
     fontSize: 20,
-    color: colors.blue,
+    fontWeight: 'bold',
+    color: 'white',
     textAlign: 'center',
-    height: 22,
-    marginBottom: 20,
+    height: 25,
+    fontFamily: 'Cookie-Regular',
+    // marginBottom: 20,
   },
   storageContent: {
-    width: width - 2 * h_margin,
-    fontSize: 20,
+    width: width - 3 * h_margin,
+    fontSize: 18,
     fontWeight: 'bold',
     color: colors.ss6orange,
     textAlign: 'center',
-    alignSelf: 'flex-end',
+    // alignSelf: 'flex-end',
+    borderRadius: 20,
+    // height: 45,
+    alignItems: 'center',
+    backgroundColor: colors.blek,
   },
   lubDisableBorder: {
     alignSelf: 'flex-start',
@@ -1006,13 +1149,31 @@ const styles = {
     flexDirection: 'column',
     paddingTop: 5,
     borderColor: colors.opaWhite,
+    backgroundColor: colors.safeArea,
     borderWidth: 0,
     borderRadius: width / 16,
-    width: width - 2 * h_margin,
+    width: width - 3 * h_margin,
     flex: 1,
     marginVertical: 2,
     elevation: 3,
-    height: 70,
+    height: 45,
+  },
+  lubHugeBorder: {
+    paddingLeft: 5,
+    alignSelf: 'center',
+    alignItems: 'center',
+    justifyContent: 'flex-start',
+    flexDirection: 'column',
+    paddingTop: 5,
+    borderColor: colors.opaWhite,
+    backgroundColor: colors.safeArea,
+    borderWidth: 0,
+    borderRadius: 30,
+    width: width - 4 * h_margin,
+    flex: 1,
+    marginVertical: 2,
+    elevation: 3,
+    height: 60,
   },
   labelInactive: {
     color: DefaultTheme.colors.placeholder,
@@ -1023,21 +1184,25 @@ const styles = {
     marginLeft: 15,
   },
   labelActive: {
-    color: DefaultTheme.colors.placeholder,
+    // color: DefaultTheme.colors.placeholder,
     fontSize: 10,
     marginLeft: 15,
     width: 65,
+    marginBottom: 10,
   },
   hmLabelActive: {
     // color: DefaultTheme.colors.placeholder,
-    color: colors.white,
-    fontSize: 10,
-    marginLeft: 0,
+    color: colors.blek,
+    fontSize: 12,
+    marginLeft: 10,
     width: 20,
     alignSelf: 'flex-start',
+    textAlign: 'left',
+    position: 'absolute',
+    backgroundColor: colors.safeArea,
   },
   hmLabelInactive: {
-    color: 'white',
+    color: colors.blek,
     fontSize: 16,
     width: 210,
     alignSelf: 'center',
@@ -1061,7 +1226,7 @@ const styles = {
     flex: 1,
     paddingLeft: 15,
     paddingRight: 15,
-    borderRadius: 5,
+    // borderRadius: 5,
   },
 };
 
